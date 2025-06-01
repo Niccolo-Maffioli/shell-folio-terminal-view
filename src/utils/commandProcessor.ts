@@ -1,7 +1,14 @@
-
 import { TerminalLine } from '../components/Terminal';
 
+interface Translations {
+  [key: string]: {
+    [key: string]: string | string[];
+  };
+}
+
 export class CommandProcessor {
+  private currentLanguage = 'en';
+  
   private fileSystem = {
     '~': {
       type: 'directory',
@@ -17,27 +24,57 @@ export class CommandProcessor {
     }
   };
 
+  private translations: Translations = {
+    en: {
+      welcomeMessage: [
+        '',
+        '██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ ',
+        '██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗',
+        '██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║',
+        '██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║',
+        '██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝',
+        '╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ',
+        '',
+        '┌─ Full Stack Developer Portfolio Terminal ─┐',
+        '│                                           │',
+        '│  Welcome to my interactive portfolio!     │',
+        '│  Type "help" to see available commands    │',
+        '│  Navigate like a real terminal            │',
+        '│                                           │',
+        '└───────────────────────────────────────────┘',
+        '',
+        '🚀 System initialized. Ready for commands...',
+        ''
+      ],
+      languageChanged: 'Language changed to English'
+    },
+    it: {
+      welcomeMessage: [
+        '',
+        '██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ ',
+        '██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗',
+        '██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║',
+        '██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║',
+        '██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝',
+        '╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ',
+        '',
+        '┌─ Portfolio Terminale Sviluppatore Full Stack ─┐',
+        '│                                                │',
+        '│  Benvenuto nel mio portfolio interattivo!      │',
+        '│  Digita "help" per vedere i comandi disponibili│',
+        '│  Naviga come un vero terminale                 │',
+        '│                                                │',
+        '└────────────────────────────────────────────────┘',
+        '',
+        '🚀 Sistema inizializzato. Pronto per i comandi...',
+        ''
+      ],
+      languageChanged: 'Lingua cambiata in Italiano'
+    }
+  };
+
   getWelcomeMessage(): string[] {
-    return [
-      '',
-      '██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ ',
-      '██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗',
-      '██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║',
-      '██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║',
-      '██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝',
-      '╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ',
-      '',
-      '┌─ Full Stack Developer Portfolio Terminal ─┐',
-      '│                                           │',
-      '│  Welcome to my interactive portfolio!     │',
-      '│  Type "help" to see available commands    │',
-      '│  Navigate like a real terminal            │',
-      '│                                           │',
-      '└───────────────────────────────────────────┘',
-      '',
-      '🚀 System initialized. Ready for commands...',
-      ''
-    ];
+    return this.translations[this.currentLanguage].welcomeMessage as string[];
   }
 
   processCommand(command: string, currentPath: string): {
@@ -48,6 +85,10 @@ export class CommandProcessor {
     const [cmd, ...args] = command.trim().split(' ');
     
     switch (cmd.toLowerCase()) {
+      case 'lang':
+      case 'language':
+        return this.handleLanguage(args[0]);
+      
       case 'help':
         return this.handleHelp();
       
@@ -79,7 +120,7 @@ export class CommandProcessor {
         return { output: [currentPath], type: 'output' };
       
       case 'whoami':
-        return { output: ['Full Stack Developer'], type: 'output' };
+        return { output: [this.currentLanguage === 'it' ? 'Sviluppatore Full Stack' : 'Full Stack Developer'], type: 'output' };
       
       case 'date':
         return { output: [new Date().toString()], type: 'output' };
@@ -94,14 +135,73 @@ export class CommandProcessor {
         return this.handleTree();
       
       default:
+        const errorMsg = this.currentLanguage === 'it' 
+          ? `Comando non trovato: ${cmd}. Digita 'help' per i comandi disponibili.`
+          : `Command not found: ${cmd}. Type 'help' for available commands.`;
         return {
-          output: [`Command not found: ${cmd}. Type 'help' for available commands.`],
+          output: [errorMsg],
           type: 'error'
         };
     }
   }
 
+  private handleLanguage(lang?: string): { output: string[]; type: 'output' | 'error' | 'system' } {
+    if (!lang) {
+      const currentMsg = this.currentLanguage === 'it' 
+        ? `Lingua attuale: ${this.currentLanguage}. Usa: lang en | lang it`
+        : `Current language: ${this.currentLanguage}. Usage: lang en | lang it`;
+      return { output: [currentMsg], type: 'output' };
+    }
+
+    if (lang === 'en' || lang === 'it') {
+      this.currentLanguage = lang;
+      const message = this.translations[lang].languageChanged as string;
+      return { output: [message], type: 'system' };
+    }
+
+    const errorMsg = this.currentLanguage === 'it'
+      ? 'Lingua non supportata. Usa: lang en | lang it'
+      : 'Language not supported. Use: lang en | lang it';
+    
+    return { output: [errorMsg], type: 'error' };
+  }
+
   private handleHelp(): { output: string[]; type: 'output' | 'error' | 'system' } {
+    if (this.currentLanguage === 'it') {
+      return {
+        output: [
+          '',
+          '📚 Comandi Disponibili:',
+          '',
+          '┌─ Comandi Portfolio ──────────────────────────┐',
+          '│  about      - Scopri di più su di me         │',
+          '│  skills     - Visualizza le mie competenze   │',
+          '│  projects   - Vedi i miei progetti recenti   │',
+          '│  experience - Controlla la mia esperienza    │',
+          '│  education  - Visualizza la mia formazione   │',
+          '│  contact    - Ottieni le mie informazioni    │',
+          '└───────────────────────────────────────────────┘',
+          '',
+          '┌─ Comandi Terminale ──────────────────────────┐',
+          '│  ls         - Elenca file e directory        │',
+          '│  cd         - Cambia directory               │',
+          '│  cat        - Mostra contenuto file          │',
+          '│  pwd        - Mostra directory corrente      │',
+          '│  whoami     - Mostra informazioni utente     │',
+          '│  date       - Mostra data/ora corrente       │',
+          '│  tree       - Mostra albero directory        │',
+          '│  clear      - Pulisci schermo terminale      │',
+          '│  lang       - Cambia lingua (en|it)          │',
+          '│  help       - Mostra questo messaggio        │',
+          '└───────────────────────────────────────────────┘',
+          '',
+          '💡 Suggerimento: Usa Tab per il completamento automatico e ↑/↓ per la cronologia',
+          ''
+        ],
+        type: 'system'
+      };
+    }
+
     return {
       output: [
         '',
@@ -125,6 +225,7 @@ export class CommandProcessor {
         '│  date       - Show current date/time        │',
         '│  tree       - Display directory tree        │',
         '│  clear      - Clear terminal screen         │',
+        '│  lang       - Change language (en|it)       │',
         '│  help       - Show this help message        │',
         '└──────────────────────────────────────────────┘',
         '',
@@ -136,6 +237,36 @@ export class CommandProcessor {
   }
 
   private handleAbout(): { output: string[]; type: 'output' | 'error' | 'system' } {
+    if (this.currentLanguage === 'it') {
+      return {
+        output: [
+          '',
+          '👋 Su di Me',
+          '═══════════',
+          '',
+          'Sono uno Sviluppatore Full Stack appassionato con oltre 5 anni di esperienza',
+          'nella creazione di applicazioni web scalabili e nella risoluzione di problemi complessi.',
+          '',
+          '🎯 Specializzazioni:',
+          '  • Frontend: React, TypeScript, Next.js, Vue.js',
+          '  • Backend: Node.js, Python, PostgreSQL, MongoDB',
+          '  • Cloud: AWS, Docker, Kubernetes',
+          '  • DevOps: CI/CD, Infrastructure as Code',
+          '',
+          '🌟 Cosa mi motiva:',
+          '  • Creare esperienze utente eccezionali',
+          '  • Scrivere codice pulito e manutenibile',
+          '  • Apprendimento continuo e innovazione',
+          '  • Mentoring di sviluppatori junior',
+          '',
+          '📍 Attualmente basato a San Francisco, CA',
+          '🌐 Aperto a opportunità remote in tutto il mondo',
+          ''
+        ],
+        type: 'output'
+      };
+    }
+
     return {
       output: [
         '',
@@ -372,8 +503,12 @@ export class CommandProcessor {
       return { output, type: 'output' };
     }
     
+    const errorMsg = this.currentLanguage === 'it'
+      ? `ls: impossibile accedere a '${arg || currentPath}': File o directory non esistente`
+      : `ls: cannot access '${arg || currentPath}': No such file or directory`;
+    
     return {
-      output: [`ls: cannot access '${arg || currentPath}': No such file or directory`],
+      output: [errorMsg],
       type: 'error'
     };
   }
@@ -396,15 +531,22 @@ export class CommandProcessor {
       return { output: [''], type: 'output', newPath };
     }
 
+    const errorMsg = this.currentLanguage === 'it'
+      ? `cd: file o directory non esistente: ${arg}`
+      : `cd: no such file or directory: ${arg}`;
+
     return {
-      output: [`cd: no such file or directory: ${arg}`],
+      output: [errorMsg],
       type: 'error'
     };
   }
 
   private handleCat(filename?: string): { output: string[]; type: 'output' | 'error' | 'system' } {
     if (!filename) {
-      return { output: ['cat: missing file operand'], type: 'error' };
+      const errorMsg = this.currentLanguage === 'it'
+        ? 'cat: operando file mancante'
+        : 'cat: missing file operand';
+      return { output: [errorMsg], type: 'error' };
     }
 
     const files: { [key: string]: string[] } = {
@@ -424,8 +566,12 @@ export class CommandProcessor {
       return { output: ['', ...files[filename], ''], type: 'output' };
     }
 
+    const errorMsg = this.currentLanguage === 'it'
+      ? `cat: ${filename}: File o directory non esistente`
+      : `cat: ${filename}: No such file or directory`;
+
     return {
-      output: [`cat: ${filename}: No such file or directory`],
+      output: [errorMsg],
       type: 'error'
     };
   }

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 
 interface TerminalInputProps {
@@ -18,7 +17,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
 
   const commands = [
     'help', 'about', 'skills', 'projects', 'experience', 'education', 
-    'contact', 'ls', 'cd', 'cat', 'clear', 'pwd', 'whoami', 'date', 'tree'
+    'contact', 'ls', 'cd', 'cat', 'clear', 'pwd', 'whoami', 'date', 'tree', 'lang'
   ];
 
   useEffect(() => {
