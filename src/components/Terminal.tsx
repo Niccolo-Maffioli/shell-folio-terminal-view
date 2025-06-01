@@ -12,13 +12,16 @@ export interface TerminalLine {
   timestamp: Date;
 }
 
+// Create a single instance of CommandProcessor that persists across renders
+const commandProcessor = new CommandProcessor();
+
 export const Terminal: React.FC = () => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [currentPath, setCurrentPath] = useState('~');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [, forceUpdate] = useState({}); // Force re-render when language changes
   const terminalRef = useRef<HTMLDivElement>(null);
-  const commandProcessor = new CommandProcessor();
 
   useEffect(() => {
     // Add welcome message
@@ -59,6 +62,13 @@ export const Terminal: React.FC = () => {
     // Update path if changed
     if (result.newPath && result.newPath !== currentPath) {
       setCurrentPath(result.newPath);
+    }
+
+    // If language was changed, force a re-render to update welcome message
+    if (command.toLowerCase().startsWith('lang ')) {
+      setTimeout(() => {
+        forceUpdate({});
+      }, 100);
     }
 
     // Add output lines
