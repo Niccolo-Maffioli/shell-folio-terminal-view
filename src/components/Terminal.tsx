@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { TerminalHeader } from './TerminalHeader';
 import { TerminalOutput } from './TerminalOutput';
@@ -17,6 +16,7 @@ const commandProcessor = new CommandProcessor();
 
 export const Terminal: React.FC = () => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
+  const [welcomeLines, setWelcomeLines] = useState<TerminalLine[]>([]);
   const [currentPath, setCurrentPath] = useState('~');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -25,13 +25,15 @@ export const Terminal: React.FC = () => {
 
   useEffect(() => {
     // Add welcome message
-    const welcomeLines = commandProcessor.getWelcomeMessage();
-    setLines(welcomeLines.map((content, index) => ({
+    const welcomeContent = commandProcessor.getWelcomeMessage();
+    const welcomeTerminalLines = welcomeContent.map((content, index) => ({
       id: `welcome-${index}`,
       type: 'system' as const,
       content,
       timestamp: new Date()
-    })));
+    }));
+    setWelcomeLines(welcomeTerminalLines);
+    setLines(welcomeTerminalLines);
   }, []);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export const Terminal: React.FC = () => {
 
     // Handle clear command specially
     if (command.trim().toLowerCase() === 'clear') {
-      setLines([]);
+      setLines([...welcomeLines]); // Reset to just welcome lines
       return;
     }
 
@@ -74,6 +76,15 @@ export const Terminal: React.FC = () => {
     if (command.toLowerCase().startsWith('lang ')) {
       setTimeout(() => {
         forceUpdate({});
+        // Update welcome lines with new language
+        const newWelcomeContent = commandProcessor.getWelcomeMessage();
+        const newWelcomeLines = newWelcomeContent.map((content, index) => ({
+          id: `welcome-${index}`,
+          type: 'system' as const,
+          content,
+          timestamp: new Date()
+        }));
+        setWelcomeLines(newWelcomeLines);
       }, 100);
     }
 
