@@ -81,6 +81,7 @@ export class CommandProcessor {
     output: string[];
     type: 'output' | 'error' | 'system';
     newPath?: string;
+    shouldClear?: boolean;
   } {
     const [cmd, ...args] = command.trim().split(' ');
     
@@ -126,7 +127,7 @@ export class CommandProcessor {
         return { output: [new Date().toString()], type: 'output' };
       
       case 'clear':
-        return { output: ['\x1b[2J\x1b[H'], type: 'system' };
+        return { output: [], type: 'system', shouldClear: true };
       
       case 'cat':
         return this.handleCat(args[0]);

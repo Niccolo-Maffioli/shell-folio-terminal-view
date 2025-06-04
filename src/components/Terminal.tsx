@@ -48,6 +48,12 @@ export const Terminal: React.FC = () => {
     setCommandHistory(prev => [...prev, command]);
     setHistoryIndex(-1);
 
+    // Handle clear command specially
+    if (command.trim().toLowerCase() === 'clear') {
+      setLines([]);
+      return;
+    }
+
     // Add command line
     const commandLine: TerminalLine = {
       id: `cmd-${Date.now()}`,
