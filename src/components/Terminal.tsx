@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { TerminalHeader } from './TerminalHeader';
 import { TerminalOutput } from './TerminalOutput';
@@ -52,11 +53,7 @@ export const Terminal: React.FC = () => {
 
     // Handle clear command specially
     if (command.trim().toLowerCase() === 'clear') {
-<<<<<<< HEAD
       setLines([...welcomeLines]);
-=======
-      setLines([...welcomeLines]); // Reset to just welcome lines
->>>>>>> 62fa677d404bc6e6fcf3a6e66c5ce0736218d7f9
       return;
     }
 
