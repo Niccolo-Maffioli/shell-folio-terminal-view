@@ -117,6 +117,7 @@ export class CommandProcessor {
 
       case "cd":
         return this.handleCd(currentPath, args[0]);
+<<<<<<< HEAD
 
       case "pwd":
         return { output: [currentPath], type: "output" };
@@ -138,6 +139,22 @@ export class CommandProcessor {
         return { output: [], type: "system", shouldClear: true };
 
       case "cat":
+=======
+      
+      case 'pwd':
+        return { output: [currentPath], type: 'output' };
+      
+      case 'whoami':
+        return { output: [this.currentLanguage === 'it' ? 'Sviluppatore Full Stack' : 'Full Stack Developer'], type: 'output' };
+      
+      case 'date':
+        return { output: [new Date().toString()], type: 'output' };
+      
+      case 'clear':
+        return { output: [], type: 'system', shouldClear: true };
+      
+      case 'cat':
+>>>>>>> 62fa677d404bc6e6fcf3a6e66c5ce0736218d7f9
         return this.handleCat(args[0]);
 
       case "tree":
