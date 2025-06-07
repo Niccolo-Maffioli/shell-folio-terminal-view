@@ -1,5 +1,6 @@
 import { clear } from "console";
 import { TerminalLine } from "../components/Terminal";
+import { Link } from "lucide-react";
 
 interface Translations {
   [key: string]: {
@@ -364,13 +365,13 @@ export class CommandProcessor {
         "🚀 Featured Projects",
         "═══════════════════",
         "",
-        /* "1. 🛒 E-Commerce Platform",
-        "   ├─ Tech Stack: React, Node.js, PostgreSQL, AWS",
-        "   ├─ Features: Real-time inventory, payment processing, admin dashboard",
-        "   ├─ Scale: 10K+ daily users, 99.9% uptime",
-        "   └─ GitHub: github.com/yourname/ecommerce-platform",
+        "1.  🎞️ Movie app",
+        "   ├─ Tech Stack: typescript, TMDB (API)",
+        "   ├─ Features: minisimulation of Netflix, view list of popular series and view list of popular films",
+        "   ├─ GitHub: https://github.com/Niccolo-Maffioli/movie-niccolo-app",
+        "   └─ Link: https://movie-niccolo-app-1yzy.vercel.app/",
         "",
-        "2. 📊 Analytics Dashboard",
+        /*"2. 📊 Analytics Dashboard",
         "   ├─ Tech Stack: Next.js, TypeScript, D3.js, Python API",
         "   ├─ Features: Real-time data visualization, custom reports",
         "   ├─ Impact: Reduced reporting time by 80%",
