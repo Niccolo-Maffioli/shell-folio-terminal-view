@@ -479,7 +479,7 @@ export class CommandProcessor {
         "📱 Phone:     +39 3348691322",
         "🌐 Website:   https://niccolo.dev/",
         "📍 Location:  Milano, MI",
-        "",
+        "", 
         "🔗 Professional Links:",
         "   💼 LinkedIn:  https://www.linkedin.com/in/niccolomaffioli/",
         "   💻 GitHub:    https://github.com/Niccolo-Maffioli",
@@ -600,8 +600,8 @@ export class CommandProcessor {
       ],
       "contact.txt": [
         "Email: nico.maffioli@gmail.com",
-        "LinkedIn: linkedin.com/in/johndoe-dev",
-        "GitHub: github.com/johndoe-dev",
+        "LinkedIn: https://www.linkedin.com/in/niccolomaffioli/",
+        "GitHub: https://github.com/Niccolo-Maffioli",
       ],
     };
 
