@@ -12,7 +12,7 @@ Il design è realizzato con **Tailwind CSS** per uno styling rapido, modulare e 
 * Realizzato con React + TypeScript (TSX)
 * Styling con Tailwind CSS (design moderno e responsivo)
 * Componenti modulari e riutilizzabili
-* SEO-friendly (meta tag personalizzati per ogni pagina)
+* SEO-friendly (meta tag)
 * Mobile-friendly e responsive su tutti i dispositivi
 * Performance ottimizzate grazie a React e Tailwind
 * Facile da estendere e mantenere
