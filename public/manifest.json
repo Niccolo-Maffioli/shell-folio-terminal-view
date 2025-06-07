@@ -1,0 +1,15 @@
+{
+  "name": "Niccolò Maffioli Portfolio",
+  "short_name": "Niccolò",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#c9d1d9",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

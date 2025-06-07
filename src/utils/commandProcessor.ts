@@ -378,7 +378,7 @@ export class CommandProcessor {
         "   └─ Link: https://exlibrisportfolio.netlify.app/",
         "",
         /*"3. 🎞️ Blink",
-        "   ├─ Tech Stack: HTML, CSS, JAvascript, Netlify (for deploy)",
+        "   ├─ Tech Stack: HTML, CSS, Javascript, Netlify (for deploy)",
         "   ├─ Features: Movie site for MetaProject Mohole, ",
         "   ├─ Users: 5K+ registered users",
         "   └─ GitHub: github.com/yourname/ai-chat-app",
