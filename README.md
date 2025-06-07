@@ -1,73 +1,137 @@
-# Welcome to your Lovable project
+# Portfolio Personale
 
-## Project info
+## Descrizione
 
-**URL**: https://lovable.dev/projects/2c63b3a1-be50-4f95-bffc-2f1a8b150c8b
+Questo è il mio portfolio personale, sviluppato con **React** e **TypeScript** (TSX) per garantire un'applicazione moderna e tipizzata.
+Il design è realizzato con **Tailwind CSS** per uno styling rapido, modulare e responsive.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Caratteristiche
 
-**Use Lovable**
+* Realizzato con React + TypeScript (TSX)
+* Styling con Tailwind CSS (design moderno e responsivo)
+* Componenti modulari e riutilizzabili
+* SEO-friendly (meta tag personalizzati per ogni pagina)
+* Mobile-friendly e responsive su tutti i dispositivi
+* Performance ottimizzate grazie a React e Tailwind
+* Facile da estendere e mantenere
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/2c63b3a1-be50-4f95-bffc-2f1a8b150c8b) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Requisiti
 
-**Use your preferred IDE**
+* Node.js (versione >= 16)
+* npm o yarn
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Installazione
 
-Follow these steps:
+1. Clona il repository
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+git clone https://github.com/tuo-username/tuo-portfolio.git
 ```
 
-**Edit a file directly in GitHub**
+2. Entra nella cartella del progetto
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+cd tuo-portfolio
+```
 
-**Use GitHub Codespaces**
+3. Installa le dipendenze
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm install
+# oppure
+yarn install
+```
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Avvio in sviluppo
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Per avviare il progetto in modalità sviluppo con hot-reload:
 
-## How can I deploy this project?
+```bash
+npm start
+# oppure
+yarn start
+```
 
-Simply open [Lovable](https://lovable.dev/projects/2c63b3a1-be50-4f95-bffc-2f1a8b150c8b) and click on Share -> Publish.
+Apri [http://localhost:3000](http://localhost:3000) nel browser per vedere il sito.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## Build per produzione
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Per creare una build ottimizzata per la produzione:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+npm run build
+# oppure
+yarn build
+```
+
+La build verrà generata nella cartella `build/`.
+
+---
+
+## Struttura del progetto
+
+```
+/src
+  /components   # Componenti React riutilizzabili
+  /pages        # Pagine del sito
+  /styles      # File CSS e configurazioni Tailwind
+  /assets      # Immagini e risorse statiche
+  App.tsx      # Componente principale
+  index.tsx    # Punto di ingresso
+tailwind.config.js   # Configurazione Tailwind
+tsconfig.json        # Configurazione TypeScript
+package.json         # Dipendenze e script
+```
+
+---
+
+## Personalizzazione
+
+* Per modificare i colori, font o altre impostazioni di Tailwind, modifica il file `tailwind.config.js`.
+* Aggiungi o modifica i componenti React dentro `/src/components`.
+* Gestisci le pagine in `/src/pages`.
+
+---
+
+## Tecnologie usate
+
+* React 18
+* TypeScript
+* Tailwind CSS
+* Vite (o Create React App) — specifica quale usi
+
+---
+
+## Contributi
+
+Questo repository è personale e non aperto a contributi esterni.
+
+---
+
+## Licenza
+
+Il progetto è distribuito sotto licenza MIT.
+
+---
+
+## Contatti
+
+Puoi contattarmi tramite:
+
+* Email: [tuo.email@example.com](mailto:tuo.email@example.com)
+* LinkedIn: [https://linkedin.com/in/tuo-profilo](https://linkedin.com/in/tuo-profilo)
+* GitHub: [https://github.com/tuo-username](https://github.com/tuo-username)
+
+---
+
+Se vuoi, posso aiutarti a personalizzare ulteriormente il README con dettagli specifici del tuo progetto o aggiungere sezioni particolari!
