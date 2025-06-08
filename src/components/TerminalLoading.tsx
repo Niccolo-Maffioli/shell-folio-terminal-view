@@ -34,7 +34,7 @@ const TerminalLoading: React.FC<TerminalLoadingProps> = ({ onFinish, lang = "en"
   }, [index]);
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full bg-black/80 text-green-400 flex items-center justify-center text-lg font-mono z-50">
+    <div className="absolute top-0 left-0 w-full h-full bg-terminal-bg text-green-400 flex items-center justify-center text-lg font-mono z-50">
       <span>{displayedText}</span>
     </div>
   );
