@@ -149,7 +149,7 @@ export class CommandProcessor {
       case "contact":
         return this.handleContact();
 
-      case "Nico":
+      case "nico":
         return this.handleNico();
 
       case "ls":
@@ -713,7 +713,7 @@ export class CommandProcessor {
     type: "output" | "error" | "system";
   } {
     return {
-      output: ["Nico"],
+      output: ["::easteregg_nico::"], // token speciale
       type: "output",
     };
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import { TerminalLine } from "./Terminal";
+import { AsciiAnimation } from "./AsciiAnimation";
 
 interface TerminalOutputProps {
   lines: TerminalLine[];
@@ -159,16 +160,27 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
 
   return (
     <div className="space-y-1">
-      {lines.map((line) => (
-        <div
-          key={line.id}
-          className={`${getLineColor(line.type)} leading-relaxed`}
-        >
-          <span className="whitespace-pre-wrap break-words">
-            {formatContent(line.content, line.type)}
-          </span>
-        </div>
-      ))}
+      {lines.map((line) => {
+        if (line.content === "::easteregg_nico::") {
+          return (
+            <div key={line.id} className="text-green-400 animate-pulse">
+              <p>✨ Ciao! Hai trovato l'easter egg! ✨</p>
+              <AsciiAnimation />
+            </div>
+          );
+        }
+
+        return (
+          <div
+            key={line.id}
+            className={`${getLineColor(line.type)} leading-relaxed`}
+          >
+            <span className="whitespace-pre-wrap break-words">
+              {formatContent(line.content, line.type)}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 };

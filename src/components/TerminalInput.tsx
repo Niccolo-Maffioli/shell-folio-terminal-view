@@ -17,7 +17,7 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
 
   const commands = [
     'help', 'about', 'skills', 'projects', 'experience', 'education', 
-    'contact', 'ls', 'cd', 'cat', 'clear', 'pwd', 'whoami', 'date', 'tree', 'lang', 'Nico'
+    'contact', 'ls', 'cd', 'cat', 'clear', 'pwd', 'whoami', 'date', 'tree', 'lang', 'nico'
   ];
 
   useEffect(() => {
