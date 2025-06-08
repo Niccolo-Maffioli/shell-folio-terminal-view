@@ -64,31 +64,51 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
     return content;
   }; */
 
-  const formatContent = (content: string, type: TerminalLine["type"]) => {
-    // Gestione link personalizzati <link=URL>
-    const linkRegex = /<link=([^>]+)>/g;
-    if (linkRegex.test(content)) {
-      const parts = content.split(linkRegex);
-      // parts sarà un array che alterna testo normale e URL
+  const renderWithNamedLinks = (text: string) => {
+    const linkRegex = /<link=([^>|]+)(\|([^>]+))?>/g;
+    const parts: (string | { url: string; label: string })[] = [];
 
-      return parts.map((part, i) => {
-        if (i % 2 === 1) {
-          // parte dispari = URL da linkare
-          return (
-            <a
-              key={i}
-              href={part}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-terminal-blue"
-            >
-              {part}
-            </a>
-          );
-        }
-        // parte pari = testo normale
+    let lastIndex = 0;
+    let match;
+
+    while ((match = linkRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(text.slice(lastIndex, match.index));
+      }
+
+      const url = match[1];
+      const label = match[3] || match[1]; // Usa il testo personalizzato se presente
+      parts.push({ url, label });
+
+      lastIndex = linkRegex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    return parts.map((part, i) => {
+      if (typeof part === "string") {
         return <span key={i}>{part}</span>;
-      });
+      }
+      return (
+        <a
+          key={i}
+          href={part.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline text-terminal-blue"
+        >
+          {part.label}
+        </a>
+      );
+    });
+  };
+
+  const formatContent = (content: string, type: TerminalLine["type"]) => {
+    // Gestione link con sintassi <link=URL|Testo>
+    if (content.includes("<link=")) {
+      return renderWithNamedLinks(content);
     }
 
     // resto della formattazione esistente...
