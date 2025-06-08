@@ -8,6 +8,7 @@ interface Translations {
   };
 }
 
+
 export class CommandProcessor {
   private currentLanguage = "en";
 
@@ -44,6 +45,7 @@ export class CommandProcessor {
         "┌─ Full Stack Developer Portfolio Terminal ─┐",
         "│                                           │",
         "│  Welcome to my interactive portfolio!     │",
+        "│                                           │",
         '│  Type "help" to see available commands    │',
         "│  Navigate like a real terminal            │",
         "│                                           │",
@@ -60,6 +62,7 @@ export class CommandProcessor {
         "┌─ Portfolio Terminale Sviluppatore Full Stack ─┐",
         "│                                                │",
         "│  Benvenuto nel mio portfolio interattivo!      │",
+        "│                                                │",
         '│  Digita "help" per vedere i comandi disponibili│',
         "│  Naviga come un vero terminale                 │",
         "│                                                │",
@@ -77,6 +80,7 @@ export class CommandProcessor {
       welcomeMessage: [
         "Full Stack Developer Portfolio Terminal",
         "Welcome to my interactive portfolio!",
+        "",
         'Type "help" to see available commands',
         "Navigate like a real terminal",
         "",
@@ -88,6 +92,7 @@ export class CommandProcessor {
       welcomeMessage: [
         "Portfolio Terminale Sviluppatore Full Stack",
         "Benvenuto nel mio portfolio interattivo!",
+        "",
         'Digita "help" per vedere i comandi disponibili',
         "Naviga come un vero terminale",
         "",
@@ -387,6 +392,7 @@ export class CommandProcessor {
     };
   }
 
+
   private handleProjects(): {
     output: string[];
     type: "output" | "error" | "system";
@@ -400,14 +406,14 @@ export class CommandProcessor {
         "1.  🎞️ Movie app",
         "   ├─ Tech Stack: typescript, TMDB (API), Vercel (for deploy)",
         "   ├─ Features: minisimulation of Netflix, view list of popular series and view list of popular films",
-        "   ├─ GitHub: https://github.com/Niccolo-Maffioli/movie-niccolo-app",
-        "   └─ Link: https://movie-niccolo-app-1yzy.vercel.app/",
+        "   ├─ GitHub: <link=https://github.com/Niccolo-Maffioli/movie-niccolo-app>",
+        "   └─ Link: <link=https://movie-niccolo-app-1yzy.vercel.app/>",
         "",
         "2. 💼 Portfolio Exlibris",
         "   ├─ Tech Stack: HTML, CSS, JAvascript, Netlify (for deploy)",
         "   ├─ Features: Portfolio template for Exlibris's employees",
-        "   ├─ GitHub: https://github.com/Niccolo-Maffioli/Exlibrisportfolio",
-        "   └─ Link: https://exlibrisportfolio.netlify.app/",
+        "   ├─ GitHub: <link=https://github.com/Niccolo-Maffioli/Exlibrisportfolio>",
+        "   └─ Portfolio Web App: <link=https://exlibris.link>",
         "",
         /*"3. 🎞️ Blink",
         "   ├─ Tech Stack: HTML, CSS, Javascript, Netlify (for deploy)",

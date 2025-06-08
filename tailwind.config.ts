@@ -69,7 +69,7 @@ export default {
 				terminal: {
 					bg: '#0d1117',
 					fg: '#c9d1d9',
-					green: '#7c3aed',
+					green: '#4af626',
 					cyan: '#06b6d4',
 					yellow: '#fbbf24',
 					red: '#ef4444',
