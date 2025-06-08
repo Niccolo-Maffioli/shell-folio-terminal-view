@@ -8,7 +8,6 @@ interface Translations {
   };
 }
 
-
 export class CommandProcessor {
   private currentLanguage = "en";
 
@@ -229,27 +228,27 @@ export class CommandProcessor {
           "",
           "📚 Comandi Disponibili:",
           "",
-          "┌─ Comandi Portfolio ──────────────────────────┐",
-          "│  about      - Scopri di più su di me         │",
-          "│  skills     - Visualizza le mie competenze   │",
-          "│  projects   - Vedi i miei progetti recenti   │",
-          "│  experience - Controlla la mia esperienza    │",
-          "│  education  - Visualizza la mia formazione   │",
-          "│  contact    - Ottieni le mie informazioni    │",
-          "└───────────────────────────────────────────────┘",
+          "┌─ Comandi Portfolio ───────────────────────────┐",
+          "│  about      - Scopri di più su di me        │",
+          "│  skills     - Visualizza le mie competenze  │",
+          "│  projects   - Vedi i miei progetti recenti  │",
+          "│  experience - Controlla la mia esperienza   │",
+          "│  education  - Visualizza la mia formazione  │",
+          "│  contact    - Ottieni le mie informazioni   │",
+          "└─────────────────────────────────────────────────┘",
           "",
-          "┌─ Comandi Terminale ──────────────────────────┐",
-          "│  ls         - Elenca file e directory        │",
-          "│  cd         - Cambia directory               │",
-          "│  cat        - Mostra contenuto file          │",
-          "│  pwd        - Mostra directory corrente      │",
-          "│  whoami     - Mostra informazioni utente     │",
-          "│  date       - Mostra data/ora corrente       │",
-          "│  tree       - Mostra albero directory        │",
-          "│  clear      - Pulisci schermo terminale      │",
-          "│  lang       - Cambia lingua (en|it)          │",
-          "│  help       - Mostra questo messaggio        │",
-          "└───────────────────────────────────────────────┘",
+          "┌─ Comandi Terminale ───────────────────────────┐",
+          "│  ls         - Elenca file e directory       │",
+          "│  cd         - Cambia directory              │",
+          "│  cat        - Mostra contenuto file         │",
+          "│  pwd        - Mostra directory corrente     │",
+          "│  whoami     - Mostra informazioni utente    │",
+          "│  date       - Mostra data/ora corrente      │",
+          "│  tree       - Mostra albero directory       │",
+          "│  clear      - Pulisci schermo terminale     │",
+          "│  lang       - Cambia lingua (en|it)         │",
+          "│  help       - Mostra questo messaggio       │",
+          "└─────────────────────────────────────────────────┘",
           "",
           "💡 Suggerimento: Usa Tab per il completamento automatico e ↑/↓ per la cronologia",
           "",
@@ -263,27 +262,27 @@ export class CommandProcessor {
         "",
         "📚 Available Commands:",
         "",
-        "┌─ Portfolio Commands ─────────────────────────┐",
-        "│  about      - Learn about me                │",
-        "│  skills     - View my technical skills      │",
-        "│  projects   - See my latest projects        │",
-        "│  experience - Check my work experience      │",
-        "│  education  - View my educational background│",
-        "│  contact    - Get my contact information    │",
-        "└──────────────────────────────────────────────┘",
+        "┌─ Portfolio Commands ───────────────────────────┐",
+        "│  about      - Learn about me                 │",
+        "│  skills     - View my technical skills       │",
+        "│  projects   - See my latest projects         │",
+        "│  experience - Check my work experience       │",
+        "│  education  - View my educational background │",
+        "│  contact    - Get my contact information     │",
+        "└──────────────────────────────────────────────────┘",
         "",
         "┌─ Terminal Commands ──────────────────────────┐",
-        "│  ls         - List files and directories    │",
-        "│  cd         - Change directory              │",
-        "│  cat        - Display file contents         │",
-        "│  pwd        - Show current directory        │",
-        "│  whoami     - Display user information      │",
-        "│  date       - Show current date/time        │",
-        "│  tree       - Display directory tree        │",
-        "│  clear      - Clear terminal screen         │",
-        "│  lang       - Change language (en|it)       │",
-        "│  help       - Show this help message        │",
-        "└──────────────────────────────────────────────┘",
+        "│  ls         - List files and directories   │",
+        "│  cd         - Change directory             │",
+        "│  cat        - Display file contents        │",
+        "│  pwd        - Show current directory       │",
+        "│  whoami     - Display user information     │",
+        "│  date       - Show current date/time       │",
+        "│  tree       - Display directory tree       │",
+        "│  clear      - Clear terminal screen        │",
+        "│  lang       - Change language (en|it)      │",
+        "│  help       - Show this help message       │",
+        "└────────────────────────────────────────────────┘",
         "",
         "💡 Tip: Use Tab for auto-completion and ↑/↓ for command history",
         "",
@@ -355,6 +354,44 @@ export class CommandProcessor {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "",
+          "💻 Technical Skills",
+          "═══════════════════",
+          "",
+          "🔥 Frontend Development:",
+          "  ▓▓▓░░ React.js             (Intermedio)",
+          "  ▓▓▓▓░ TypeScript/JavaScript (Avanzato)",
+          "  ▓▓▓▓▓ HTML5/CSS3/SCSS      (Esperto)",
+          "  ▓▓▓▓░ Tailwind CSS         (Avanzato)",
+          "  ▓▓▓░░ Webpack/Vite         (Intermedio)",
+
+          "",
+          "⚙️ Backend Development:",
+          "  ▓▓▓░░ Node.js              (Intermedio)",
+          "  ▓▓░░░ Python               (Basi)",
+          "  ▓▓░░░ PHP                  (Basi)",
+          "  ▓▓▓▓░ RESTful APIs         (Avanzato)",
+          "",
+          "🗄️ Databases:",
+          "  ▓▓▓▓░ MySQL                (Avanzato)",
+          "  ▓░░░░ MongoDB              (familiarità)",
+          "",
+          "☁️ Cloud & DevOps:",
+          "  ▓▓░░░ CI/CD Pipelines      (Basi)",
+          "  ▓▓▓░░ GitHub Actions       (Intermedio)",
+          "",
+          "🛠️ Tools & Others:",
+          "  ▓▓▓▓░ Git/GitHub           (Avanzato)",
+          "  ▓▓▓▓▓ VS Code              (Esperto)",
+          "",
+        ],
+        type: "output",
+      };
+    }
+
     return {
       output: [
         "",
@@ -392,11 +429,48 @@ export class CommandProcessor {
     };
   }
 
-
   private handleProjects(): {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "",
+          "🚀 Progetti in Evidenza",
+          "════════════════════════",
+          "",
+          "1.  🎞️ Movie app",
+          "   ├─ Stack Tecnologico: TypeScript, TMDB (API), Vercel (per il deploy)",
+          "   ├─ Funzionalità: mini-simulazione di Netflix, visualizzazione lista serie popolari e lista film popolari",
+          "   ├─ GitHub: <link=https://github.com/Niccolo-Maffioli/movie-niccolo-app>",
+          "   └─ Link: <link=https://movie-niccolo-app-1yzy.vercel.app/>",
+          "",
+          "2. 💼 Portfolio Exlibris",
+          "   ├─ Stack Tecnologico: HTML, CSS, JavaScript, Netlify (per il deploy)",
+          "   ├─ Funzionalità: template portfolio per i collaboratori di Exlibris",
+          "   ├─ GitHub: <link=https://github.com/Niccolo-Maffioli/Exlibrisportfolio>",
+          "   └─ Portfolio Web App: <link=https://exlibris.link>",
+          "",
+          /*"3. 🎞️ Blink",
+    "   ├─ Stack Tecnologico: HTML, CSS, JavaScript, Netlify (per il deploy)",
+    "   ├─ Funzionalità: sito di film per MetaProject Mohole",
+    "   ├─ Utenti: oltre 5.000 utenti registrati",
+    "   └─ GitHub: github.com/yourname/ai-chat-app",
+    "",
+    "4. 🏗️ Strumento di Project Management",
+    "   ├─ Stack Tecnologico: React, Django, PostgreSQL, Docker",
+    "   ├─ Funzionalità: tracciamento attività, collaborazione di team, tracciamento del tempo",
+    "   ├─ Adozione: utilizzato da 3 aziende, oltre 100 progetti",
+    "   └─ GitHub: github.com/yourname/project-management",
+    "",
+    '💡 Vedi altri progetti: "cd ~/projects" poi "ls"', */
+          "",
+        ],
+        type: "output",
+      };
+    }
+
     return {
       output: [
         "",
@@ -438,6 +512,30 @@ export class CommandProcessor {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "",
+          "💼 Esperienza Professionale",
+          "════════════════════════════",
+          "",
+          "🗓️ 2022 – 2023",
+          "🔹 Collaborazione Freelance",
+          "   📍 Exlibris.link Srl",
+          "   ┌─ Progettazione di copertine per libri digitali (formato EPUB3)",
+          "   ├─ Sviluppo e gestione di un sistema intranet web per l'archiviazione di contenuti digitali",
+          "   └─ Realizzazione di un'applicazione web per la gestione dei portfolio digitali dei collaboratori",
+          "",
+          "🗓️ 2021 – 2022",
+          "🔹 Collaborazione con il reparto R&S",
+          "   📍 Ste Industries Srl",
+          "   ┌─ Creazione di loghi prototipo per nuove linee di prodotto",
+          "   └─ Progettazione di mockup e materiali visivi per brochure marketing",
+          "",
+        ],
+        type: "output",
+      };
+    }
     return {
       output: [
         "",
@@ -466,6 +564,44 @@ export class CommandProcessor {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "",
+          "🎓 Formazione & Certificazioni",
+          "══════════════════════════════",
+          "",
+          "🏫 Sviluppatore Full Stack con Tecnologie Cloud",
+          "   📍 ITS - Tech Talent Factory, Milano",
+          "   📅 2024 - 2026 | Voto finale: --",
+          "",
+          "🏫 Graphic Design",
+          "   📍 Mohole, Milano",
+          "   📅 2022 - 2024 | Voto finale: 27/30",
+          "",
+          "🏫 Web e Media Digitali",
+          "   📍 Mohole, Milano",
+          "   📅 2020 - 2022 | Voto finale: 25/30",
+          "",
+          "🏫 Liceo Artistico Brera (Hajeck) – Indirizzo Architettura",
+          "   📍 Milano, Italia",
+          "   📅 2014 - 2019",
+          "",
+          "📚 Formazione Continua:",
+          "   • Best practices in JavaScript e TypeScript",
+          "   • Design Responsivo e Accessibilità",
+          "   • Fondamenti di DevOps e principi CI/CD",
+          "   • Git e flussi di lavoro per il controllo versione",
+          "",
+          "🏆 Risultati:",
+          "   • Sviluppato e distribuito diversi progetti personali",
+          "   • Collaborato su progetti accademici in ambito design e sviluppo",
+          "",
+        ],
+        type: "output",
+      };
+    }
+
     return {
       output: [
         "",
