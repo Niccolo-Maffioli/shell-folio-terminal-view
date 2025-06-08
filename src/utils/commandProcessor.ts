@@ -72,8 +72,40 @@ export class CommandProcessor {
     },
   };
 
-  getWelcomeMessage(): string[] {
-    return this.translations[this.currentLanguage].welcomeMessage as string[];
+  private translationsMobile: Translations = {
+    en: {
+      welcomeMessage: [
+        "Full Stack Developer Portfolio Terminal",
+        "Welcome to my interactive portfolio!",
+        'Type "help" to see available commands',
+        "Navigate like a real terminal",
+        "",
+        "🚀 System initialized. Ready for commands...",
+      ],
+      languageChanged: "Language changed to English",
+    },
+    it: {
+      welcomeMessage: [
+        "Portfolio Terminale Sviluppatore Full Stack",
+        "Benvenuto nel mio portfolio interattivo!",
+        'Digita "help" per vedere i comandi disponibili',
+        "Naviga come un vero terminale",
+        "",
+        "🚀 Sistema inizializzato. Pronto per i comandi...",
+      ],
+      languageChanged: "Lingua cambiata in Italiano",
+    },
+  };
+
+  private isMobile(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  getWelcomeMessage(isMobile: boolean): string[] {
+    return isMobile
+      ? (this.translationsMobile[this.currentLanguage]
+          .welcomeMessage as string[])
+      : (this.translations[this.currentLanguage].welcomeMessage as string[]);
   }
 
   processCommand(
@@ -479,7 +511,7 @@ export class CommandProcessor {
         "📱 Phone:     +39 3348691322",
         "🌐 Website:   https://niccolo.dev/",
         "📍 Location:  Milano, MI",
-        "", 
+        "",
         "🔗 Professional Links:",
         "   💼 LinkedIn:  https://www.linkedin.com/in/niccolomaffioli/",
         "   💻 GitHub:    https://github.com/Niccolo-Maffioli",

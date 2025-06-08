@@ -3,7 +3,7 @@ import { TerminalHeader } from "./TerminalHeader";
 import { TerminalOutput } from "./TerminalOutput";
 import { TerminalInput } from "./TerminalInput";
 import { CommandProcessor } from "../utils/commandProcessor";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 export interface TerminalLine {
   id: string;
@@ -23,10 +23,27 @@ export const Terminal: React.FC = () => {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [, forceUpdate] = useState({}); // Force re-render when language changes
   const terminalRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
-    // Add welcome message
-    const welcomeContent = commandProcessor.getWelcomeMessage();
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const welcomeContent = commandProcessor.getWelcomeMessage(isMobile);
     const welcomeTerminalLines = welcomeContent.map((content, index) => ({
       id: `welcome-${index}`,
       type: "system" as const,
@@ -35,7 +52,7 @@ export const Terminal: React.FC = () => {
     }));
     setWelcomeLines(welcomeTerminalLines);
     setLines(welcomeTerminalLines);
-  }, []);
+  }, [isMobile]); // <-- ora si aggiorna quando cambia la larghezza
 
   useEffect(() => {
     // Auto-scroll to bottom
@@ -78,7 +95,7 @@ export const Terminal: React.FC = () => {
       setTimeout(() => {
         forceUpdate({});
         // Update welcome lines with new language
-        const newWelcomeContent = commandProcessor.getWelcomeMessage();
+        const newWelcomeContent = commandProcessor.getWelcomeMessage(isMobile);
         const newWelcomeLines = newWelcomeContent.map((content, index) => ({
           id: `welcome-${index}`,
           type: "system" as const,
@@ -125,7 +142,10 @@ export const Terminal: React.FC = () => {
     <>
       <Helmet>
         <title>Niccolò Maffioli | Web Developer</title>
-        <meta name="description" content="Portfolio personale di Niccolò Maffioli, sviluppatore front-end specializzato in React, TypeScript e Tailwind." />
+        <meta
+          name="description"
+          content="Portfolio personale di Niccolò Maffioli, sviluppatore front-end specializzato in React, TypeScript e Tailwind."
+        />
         <meta property="og:title" content="Niccolò Maffioli | Web Developer" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://niccolo.dev/works" />
