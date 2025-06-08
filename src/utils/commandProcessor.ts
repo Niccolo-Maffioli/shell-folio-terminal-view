@@ -33,7 +33,7 @@ export class CommandProcessor {
     },
     "~/experience": {
       type: "directory",
-      children: ["senior-dev.txt", "fullstack-dev.txt", "frontend-dev.txt"],
+      children: ["junior-dev.txt", "fullstack-dev.txt", "frontend-dev.txt"],
     },
   };
 
@@ -148,6 +148,9 @@ export class CommandProcessor {
 
       case "contact":
         return this.handleContact();
+
+      case "Nico":
+        return this.handleNico();
 
       case "ls":
         return this.handleLs(currentPath, args[0]);
@@ -701,6 +704,16 @@ export class CommandProcessor {
         "   • Collaborated on design and development with peers during academic projects",
         "",
       ],
+      type: "output",
+    };
+  }
+
+  private handleNico(): {
+    output: string[];
+    type: "output" | "error" | "system";
+  } {
+    return {
+      output: ["Nico"],
       type: "output",
     };
   }
