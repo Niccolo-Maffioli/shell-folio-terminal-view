@@ -107,10 +107,10 @@ export const Terminal: React.FC = () => {
     }
 
     // Add output lines
-    const outputLines: TerminalLine[] = result.output.map((content, index) => ({
+    const outputLines: TerminalLine[] = result.output.map((line, index) => ({
       id: `out-${Date.now()}-${index}`,
       type: result.type,
-      content,
+      content: line,
       timestamp: new Date(),
     }));
 
