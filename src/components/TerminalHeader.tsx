@@ -20,7 +20,7 @@ export const TerminalHeader: React.FC = () => {
             <button
               className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center hover:bg-yellow-400 transition-colors"
               aria-label="Nascondi scheda"
-              onClick={() => setIsMinimized(!isMinimized)}
+              onClick={() => alert("Simulazione nascondimento se esiste come parola")}
             >
               <Minus className="w-3 h-3 text-yellow-900" aria-hidden="true" />
             </button>
@@ -36,13 +36,6 @@ export const TerminalHeader: React.FC = () => {
         </div>
         <div className="text-xs text-gray-400">{new Date().toLocaleDateString()}</div>
       </div>
-
-      {/* CONTENUTO TERMINALE */}
-      {!isMinimized && (
-        <div className="p-4 text-gray-200 text-sm">
-          <p>Hi, Welcome to my Portfolio</p>
-        </div>
-      )}
     </div>
   );
 };
