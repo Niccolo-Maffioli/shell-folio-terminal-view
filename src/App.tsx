@@ -28,7 +28,7 @@ const App = () => {
           <Sonner />
 
           {loading ? (
-            <TerminalLoading lang="it" onFinish={() => setLoading(false)}/>
+            <TerminalLoading lang="en" onFinish={() => setLoading(false)}/>
           ) : (
             <BrowserRouter>
               <Routes>
