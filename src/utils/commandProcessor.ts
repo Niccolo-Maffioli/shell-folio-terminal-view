@@ -222,6 +222,72 @@ export class CommandProcessor {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.isMobile) {
+      if (this.currentLanguage === "it") {
+        return {
+          output: [
+            "",
+            "📚 Comandi Disponibili:",
+            "",
+            "Comandi Portfolio:",
+            "  • about      - Scopri di più su di me",
+            "  • skills     - Visualizza le mie competenze",
+            "  • projects   - Vedi i miei progetti recenti",
+            "  • experience - Controlla la mia esperienza",
+            "  • education  - Visualizza la mia formazione",
+            "  • contact    - Ottieni le mie informazioni",
+            "",
+            "Comandi Terminale:",
+            "  • ls         - Elenca file e directory",
+            "  • cd         - Cambia directory",
+            "  • cat        - Mostra contenuto file",
+            "  • pwd        - Mostra directory corrente",
+            "  • whoami     - Mostra informazioni utente",
+            "  • date       - Mostra data/ora corrente",
+            "  • tree       - Mostra albero directory",
+            "  • clear      - Pulisci schermo terminale",
+            "  • lang       - Cambia lingua (en|it)",
+            "  • help       - Mostra questo messaggio",
+            "",
+            "💡 Suggerimento: Usa Tab per il completamento automatico e ↑/↓ per la cronologia",
+            "",
+          ],
+          type: "system",
+        };
+      }
+
+      return {
+        output: [
+          "",
+          "📚 Available Commands:",
+          "",
+          "Portfolio Commands:",
+          "  • about      - Learn about me",
+          "  • skills     - View my technical skills",
+          "  • projects   - See my latest projects",
+          "  • experience - Check my work experience",
+          "  • education  - View my educational background",
+          "  • contact    - Get my contact information",
+          "",
+          "Terminal Commands:",
+          "  • ls         - List files and directories",
+          "  • cd         - Change directory",
+          "  • cat        - Display file contents",
+          "  • pwd        - Show current directory",
+          "  • whoami     - Display user information",
+          "  • date       - Show current date/time",
+          "  • tree       - Display directory tree",
+          "  • clear      - Clear terminal screen",
+          "  • lang       - Change language (en|it)",
+          "  • help       - Show this help message",
+          "",
+          "💡 Tip: Use Tab for auto-completion and ↑/↓ for command history",
+          "",
+        ],
+        type: "system",
+      };
+    }
+
     if (this.currentLanguage === "it") {
       return {
         output: [
@@ -643,6 +709,36 @@ export class CommandProcessor {
     output: string[];
     type: "output" | "error" | "system";
   } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "",
+          "📞 Informazioni di Contatto",
+          "════════════════════",
+          "",
+          "📧 Email:  nico.maffioli@gmail.com",
+          "📱 Cell:   +39 3348691322",
+          "🌐 Sito:   <link=https://niccolo.dev/>",
+          "📍 Sede:   Milano, MI",
+          "",
+          "🔗 Link Professionali:",
+          "   💼 LinkedIn:  <link=https://www.linkedin.com/in/niccolomaffioli/>",
+          "   💻 GitHub:    <link=https://github.com/Niccolo-Maffioli>",
+          "",
+          "💬 Restiamo in contatto!",
+          "   Sono sempre aperto a discutere nuove opportunità,",
+          "   collaborare su progetti interessanti o semplicemente",
+          "   fare due chiacchiere su tecnologia e sviluppo.",
+          "",
+          "🕐 Disponibilità: Aperto a nuove opportunità",
+          "💰 Tariffa: €80-120/ora (freelance)",
+          "⏰ Fuso orario: CET/CEST (UTC+1/UTC+2)",
+          "",
+        ],
+        type: "output",
+      };
+    }
+
     return {
       output: [
         "",
