@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Minus, Square, X } from 'lucide-react';
 
@@ -7,21 +6,40 @@ export const TerminalHeader: React.FC = () => {
     <div className="bg-gray-800 border-b border-gray-700 px-4 py-2 flex items-center justify-between">
       <div className="flex items-center space-x-2">
         <div className="space-x-2 hidden md:flex">
-          <button className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors" aria-label="Chiudi scheda">
-            <X className="w-2 h-2 text-red-900 mx-auto" />
+          {/* Bottone Chiudi */}
+          <button
+            className="w-12 h-12 flex items-center justify-center"
+            aria-label="Chiudi scheda"
+          >
+            <div className="w-4 h-4 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center">
+              <X className="w-3 h-3 text-red-900" aria-hidden="true" />
+            </div>
           </button>
-          <button className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors" aria-label="Nascondi scheda">
-            <Minus className="w-2 h-2 text-yellow-900 mx-auto" />
+
+          {/* Bottone Nascondi */}
+          <button
+            className="w-12 h-12 flex items-center justify-center"
+            aria-label="Nascondi scheda"
+          >
+            <div className="w-4 h-4 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors flex items-center justify-center">
+              <Minus className="w-3 h-3 text-yellow-900" aria-hidden="true" />
+            </div>
           </button>
-          <button className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors" aria-label="Chiudi scheda">
-            <Square className="w-2 h-2 text-green-900 mx-auto" />
+
+          {/* Bottone Ingrandisci */}
+          <button
+            className="w-12 h-12 flex items-center justify-center"
+            aria-label="Ingrandisci scheda"
+          >
+            <div className="w-4 h-4 bg-green-500 rounded-full hover:bg-green-400 transition-colors flex items-center justify-center">
+              <Square className="w-3 h-3 text-green-900" aria-hidden="true" />
+            </div>
           </button>
         </div>
+
         <span className="text-sm text-gray-300 ml-4">Terminal - Portfolio</span>
       </div>
-      <div className="text-xs text-gray-400">
-        {new Date().toLocaleDateString()}
-      </div>
+      <div className="text-xs text-gray-400">{new Date().toLocaleDateString()}</div>
     </div>
   );
 };
