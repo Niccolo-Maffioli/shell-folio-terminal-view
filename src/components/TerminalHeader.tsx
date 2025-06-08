@@ -8,7 +8,7 @@ export const TerminalHeader: React.FC = () => {
         <div className="space-x-2 hidden md:flex">
           {/* Bottone Chiudi */}
           <button
-            className="w-12 h-12 flex items-center justify-center"
+            className="w-10 h-10 flex items-center justify-center"
             aria-label="Chiudi scheda"
           >
             <div className="w-4 h-4 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center">
@@ -18,7 +18,7 @@ export const TerminalHeader: React.FC = () => {
 
           {/* Bottone Nascondi */}
           <button
-            className="w-12 h-12 flex items-center justify-center"
+            className="w-10 h-10 flex items-center justify-center"
             aria-label="Nascondi scheda"
           >
             <div className="w-4 h-4 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors flex items-center justify-center">
@@ -28,7 +28,7 @@ export const TerminalHeader: React.FC = () => {
 
           {/* Bottone Ingrandisci */}
           <button
-            className="w-12 h-12 flex items-center justify-center"
+            className="w-10 h-10 flex items-center justify-center"
             aria-label="Ingrandisci scheda"
           >
             <div className="w-4 h-4 bg-green-500 rounded-full hover:bg-green-400 transition-colors flex items-center justify-center">
@@ -37,9 +37,9 @@ export const TerminalHeader: React.FC = () => {
           </button>
         </div>
 
-        <span className="text-sm text-gray-300 ml-4">Terminal - Portfolio</span>
+        <span className="text-md text-gray-300 ml-4">Terminal - Portfolio</span>
       </div>
-      <div className="text-xs text-gray-400">{new Date().toLocaleDateString()}</div>
+      <div className="text-sm text-gray-400">{new Date().toLocaleDateString()}</div>
     </div>
   );
 };
