@@ -40,7 +40,7 @@ export const TerminalHeader: React.FC = () => {
       {/* CONTENUTO TERMINALE */}
       {!isMinimized && (
         <div className="p-4 text-gray-200 text-sm">
-          <p>Benvenuto nel mio terminale portfolio! Scrivi un comando o esplora i contenuti.</p>
+          <p>Hi, Welcome to my Portfolio</p>
         </div>
       )}
     </div>
