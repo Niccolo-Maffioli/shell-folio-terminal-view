@@ -146,7 +146,7 @@ export const Terminal: React.FC = () => {
           name="description"
           content="Portfolio personale di Niccolò Maffioli, sviluppatore front-end specializzato in React, TypeScript e Tailwind."
         />
-        <meta property="og:title" content="Niccolò Maffioli | Web Developer" />
+        <meta property="og:title" content="Niccolò Maffioli | Full-Stack Developer" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://niccolo.dev/works" />
         <meta property="og:image" content="https://niccolo.dev/preview.jpg" />

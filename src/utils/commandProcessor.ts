@@ -152,6 +152,9 @@ export class CommandProcessor {
       case "nico":
         return this.handleNico();
 
+      case "blog":
+        return this.handleBlog();
+
       case "ls":
         return this.handleLs(currentPath, args[0]);
 
@@ -239,6 +242,7 @@ export class CommandProcessor {
             "  • experience - Controlla la mia esperienza",
             "  • education  - Visualizza la mia formazione",
             "  • contact    - Ottieni le mie informazioni",
+            "  • blog       - i miei ultimi articoli",
             "",
             "Comandi Terminale:",
             "  • ls         - Elenca file e directory",
@@ -271,6 +275,7 @@ export class CommandProcessor {
           "  • experience - Check my work experience",
           "  • education  - View my educational background",
           "  • contact    - Get my contact information",
+          "  • blog       - My last articles",
           "",
           "Terminal Commands:",
           "  • ls         - List files and directories",
@@ -925,5 +930,50 @@ export class CommandProcessor {
       ],
       type: "output",
     };
+  }
+
+  private handleBlog(): {
+    output: string[];
+    type: "output" | "error" | "system";
+  } {
+    if (this.currentLanguage === "it") {
+      return {
+        output: [
+          "📝 Personal Blog - Life beyond code",
+          "",
+          "⚠️ Attenzione: questo blog contiene riflessioni personali e mediche.",
+          "Sono parte della mia storia, vanno oltre il lavoro.",
+          "Leggere con rispetto e mente aperta. ❤️",
+          "",
+          "📅 Entries:",
+          "  • [2025-06-09] - L'intervento imminente",
+          "  • [2025-05-28] - Amore incondizionato",
+          "  • [2025-04-15] - Lo stage e i miei obiettivi",
+          "",
+          "👉 Usa il comando `blog <data>` per leggere un post.",
+          "   Esempio: `blog 2025-06-09`",
+        ],
+        type: "output",
+      };
+    }
+
+    return {
+        output: [
+          "📝 Personal Blog - Life beyond code",
+          "",
+          "⚠️ Attenzione: questo blog contiene riflessioni personali e mediche.",
+          "Sono parte della mia storia, vanno oltre il lavoro.",
+          "Leggere con rispetto e mente aperta. ❤️",
+          "",
+          "📅 Entries:",
+          "  • [2025-06-09] - L'intervento imminente",
+          "  • [2025-05-28] - Amore incondizionato",
+          "  • [2025-04-15] - Lo stage e i miei obiettivi",
+          "",
+          "👉 Usa il comando `blog <data>` per leggere un post.",
+          "   Esempio: `blog 2025-06-09`",
+        ],
+        type: "output",
+      };
   }
 }
