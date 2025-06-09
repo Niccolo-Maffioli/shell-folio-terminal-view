@@ -31,7 +31,7 @@ Il design è realizzato con **Tailwind CSS** per uno styling rapido, modulare e 
 1. Clona il repository
 
 ```bash
-git clone https://github.com/tuo-username/tuo-portfolio.git
+git clone https://github.com/Niccolo-Maffioli/shell-folio-terminal-view.git
 ```
 
 2. Entra nella cartella del progetto
