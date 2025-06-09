@@ -37,7 +37,7 @@ git clone https://github.com/Niccolo-Maffioli/shell-folio-terminal-view.git
 2. Entra nella cartella del progetto
 
 ```bash
-cd tuo-portfolio
+cd shell-folio-terminal-view
 ```
 
 3. Installa le dipendenze
@@ -128,10 +128,6 @@ Il progetto è distribuito sotto licenza MIT.
 
 Puoi contattarmi tramite:
 
-* Email: [tuo.email@example.com](mailto:tuo.email@example.com)
-* LinkedIn: [https://linkedin.com/in/tuo-profilo](https://linkedin.com/in/tuo-profilo)
-* GitHub: [https://github.com/tuo-username](https://github.com/tuo-username)
-
----
-
-Se vuoi, posso aiutarti a personalizzare ulteriormente il README con dettagli specifici del tuo progetto o aggiungere sezioni particolari!
+* Email: [nico.maffioli@gmail.com](mailto:nico.maffioli@gmail.com)
+* LinkedIn: [https://www.linkedin.com/in/niccolomaffioli/](https://www.linkedin.com/in/niccolomaffioli/)
+* GitHub: [https://github.com/Niccolo-Maffioli](https://github.com/Niccolo-Maffioli)
