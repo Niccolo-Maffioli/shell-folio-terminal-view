@@ -153,7 +153,7 @@ export const Terminal: React.FC = () => {
       </Helmet>
       <div className="h-screen bg-terminal-bg text-terminal-fg font-mono flex flex-col">
         <TerminalHeader />
-        <div ref={terminalRef} className="flex-1 overflow-y-auto p-4 pb-2 ">
+        <div ref={terminalRef} className="flex-1 overflow-y-auto p-4 pb-2">
           <TerminalOutput lines={lines} />
         </div>
         <TerminalInput

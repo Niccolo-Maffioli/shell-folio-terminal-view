@@ -1,6 +1,7 @@
 import { clear } from "console";
 import { TerminalLine } from "../components/Terminal";
 import { Link } from "lucide-react";
+import { blob } from "stream/consumers";
 
 interface Translations {
   [key: string]: {
@@ -153,7 +154,7 @@ export class CommandProcessor {
         return this.handleNico();
 
       case "blog":
-        return this.handleBlog();
+        return this.handleBlog(args[0]);
 
       case "ls":
         return this.handleLs(currentPath, args[0]);
@@ -932,48 +933,110 @@ export class CommandProcessor {
     };
   }
 
-  private handleBlog(): {
+  private handleBlog(date?: string): {
     output: string[];
     type: "output" | "error" | "system";
   } {
-    if (this.currentLanguage === "it") {
+    const isItalian = this.currentLanguage === "it";
+
+    const blogPosts: Record<string, string[]> = isItalian
+      ? {
+          "2025-06-09": [
+            "🗓️ [2025-06-09] - Il prossimo intervento al cervello",
+            "",
+            "Dopo oltre 12 anni vissuti con l’epilessia, sto affrontando un momento cruciale:",
+            "un intervento ad alto rischio sull’insula destra. Non è la mia prima operazione,",
+            "ma potrebbe essere quella con le conseguenze più importanti — nel bene o nel male.",
+            "",
+            "I medici non sono sicuri. Potrebbe essere la scelta giusta, oppure un errore.",
+            "Ma sono arrivato fin qui con forza e pazienza.",
+            "",
+            "Qualunque cosa accada, sono orgoglioso della persona che sono diventato.",
+          ],
+          "2025-04-15": [
+            "🗓️ [2025-04-15] - Lo stage e i miei obiettivi",
+            "",
+            "Attualmente sto facendo uno stage organizzato dalla scuola.",
+            "È il mio ultimo anno, e questo tirocinio rappresenta un passo fondamentale per il mio futuro.",
+            "",
+            "Sto imparando molto, lavorando su progetti reali, e cercando di bilanciare",
+            "vita, salute e istruzione — e onestamente, me la sto cavando bene.",
+          ],
+        }
+      : {
+          "2025-06-09": [
+            "🗓️ [2025-06-09] - The upcoming brain surgery",
+            "",
+            "After over 12 years of living with epilepsy, I'm facing a crucial moment:",
+            "a high-risk surgery on the right insula. It's not my first operation,",
+            "but it might be the one with the most consequences — for better or worse.",
+            "",
+            "The doctors aren't sure. It could be the right decision, or a mistake.",
+            "But I’ve come this far with strength and patience.",
+            "",
+            "Whatever happens, I'm proud of the person I've become.",
+          ],
+          "2025-04-15": [
+            "🗓️ [2025-04-15] - My internship and goals",
+            "",
+            "Right now I’m doing an internship through school.",
+            "It’s my final year and this stage marks a key step for my future.",
+            "",
+            "I’m learning a lot, building real projects, and trying to balance",
+            "life, health, and education — and honestly, I'm doing okay.",
+          ],
+        };
+
+    // Se nessuna data è passata, mostra la lista degli articoli
+    if (!date) {
       return {
-        output: [
-          "📝 Personal Blog - Life beyond code",
-          "",
-          "⚠️ Attenzione: questo blog contiene riflessioni personali e mediche.",
-          "Sono parte della mia storia, vanno oltre il lavoro.",
-          "Leggere con rispetto e mente aperta. ❤️",
-          "",
-          "📅 Entries:",
-          "  • [2025-06-09] - L'intervento imminente",
-          "  • [2025-05-28] - Amore incondizionato",
-          "  • [2025-04-15] - Lo stage e i miei obiettivi",
-          "",
-          "👉 Usa il comando `blog <data>` per leggere un post.",
-          "   Esempio: `blog 2025-06-09`",
-        ],
+        output: isItalian
+          ? [
+              "📝 Personal Blog - Life beyond code",
+              "",
+              "⚠️ Attenzione: questo blog contiene riflessioni personali e mediche.",
+              "Sono parte della mia storia, vanno oltre il lavoro.",
+              "Leggere con rispetto e mente aperta. ❤️",
+              "",
+              "📅 Articoli:",
+              "  • [2025-06-09] - L'intervento imminente",
+              "  • [2025-04-15] - Lo stage e i miei obiettivi",
+              "",
+              "👉 Usa il comando `blog <data>` per leggere un post.",
+              "   Esempio: `blog 2025-06-09`",
+            ]
+          : [
+              "📝 Personal Blog - Life beyond code",
+              "",
+              "⚠️ Warning: this blog contains personal and medical reflections.",
+              "These are part of my story and go beyond my work.",
+              "Please read with respect and an open mind. ❤️",
+              "",
+              "📅 Entries:",
+              "  • [2025-06-09] - The upcoming brain surgery",
+              "  • [2025-04-15] - My internship and goals",
+              "",
+              "👉 Use the command `blog <date>` to read a post.",
+              "   Example: `blog 2025-06-09`",
+            ],
         type: "output",
       };
     }
 
+    // Se la data è presente, cerca l'articolo
+    if (blogPosts[date]) {
+      return {
+        output: blogPosts[date],
+        type: "output",
+      };
+    }
+
+    // Data non trovata
     return {
-      output: [
-        "📝 Personal Blog - Life beyond code",
-        "",
-        "⚠️ Warning: this blog contains personal and medical reflections.",
-        "These are part of my story and go beyond my work.",
-        "Please read with respect and an open mind. ❤️",
-        "",
-        "📅 Entries:",
-        "  • [2025-06-09] - The upcoming brain surgery",
-        "  • [2025-05-28] - Unconditional love",
-        "  • [2025-04-15] - My internship and goals",
-        "",
-        "👉 Use the command `blog <date>` to read a post.",
-        "   Example: `blog 2025-06-09`",
-      ],
-      type: "output",
+      output: isItalian
+        ? [`❌ Nessun articolo trovato per la data: ${date}`]
+        : [`❌ No blog post found for date: ${date}`],
+      type: "error",
     };
   }
 }
