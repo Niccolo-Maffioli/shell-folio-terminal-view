@@ -958,22 +958,22 @@ export class CommandProcessor {
     }
 
     return {
-        output: [
-          "📝 Personal Blog - Life beyond code",
-          "",
-          "⚠️ Attenzione: questo blog contiene riflessioni personali e mediche.",
-          "Sono parte della mia storia, vanno oltre il lavoro.",
-          "Leggere con rispetto e mente aperta. ❤️",
-          "",
-          "📅 Entries:",
-          "  • [2025-06-09] - L'intervento imminente",
-          "  • [2025-05-28] - Amore incondizionato",
-          "  • [2025-04-15] - Lo stage e i miei obiettivi",
-          "",
-          "👉 Usa il comando `blog <data>` per leggere un post.",
-          "   Esempio: `blog 2025-06-09`",
-        ],
-        type: "output",
-      };
+      output: [
+        "📝 Personal Blog - Life beyond code",
+        "",
+        "⚠️ Warning: this blog contains personal and medical reflections.",
+        "These are part of my story and go beyond my work.",
+        "Please read with respect and an open mind. ❤️",
+        "",
+        "📅 Entries:",
+        "  • [2025-06-09] - The upcoming brain surgery",
+        "  • [2025-05-28] - Unconditional love",
+        "  • [2025-04-15] - My internship and goals",
+        "",
+        "👉 Use the command `blog <date>` to read a post.",
+        "   Example: `blog 2025-06-09`",
+      ],
+      type: "output",
+    };
   }
 }
