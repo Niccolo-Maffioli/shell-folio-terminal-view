@@ -1,26 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import "./Navbar.css";
+import { type LocaleCode } from "../locales/appContent";
 
 interface NavbarProps {
     onSelectCommand: (command: string) => void;
+    currentLanguage: LocaleCode;
 }
 
-const currentLang = navigator.language.startsWith("it") ? "it" : "en";
+type NavLink = { label: string; command: string; id: string };
 
-const NAV_LINKS: Array<{ label: string; command: string; id: string }> = [
-    { label: "About", command: "about", id: "About-me" },
-    { label: "Skills", command: "skills", id: "Skills" },
-    { label: "Projects", command: "projects", id: "Projects" },
-    { label: "Experience", command: "experience", id: "Experience" },
-    { label: "Contact", command: "contact", id: "Contact" },
-    { label: "Help", command: "help", id: "Help" },
-    { label: "Clear", command: "clear", id: "Clear" },
-    { label: "lang", command: "lang" + (currentLang === "it" ? " it" : " en"), id: "Language" },
-];
+const buildNavLinks = (currentLanguage: LocaleCode): NavLink[] => {
+    const targetLang = currentLanguage === "it" ? "en" : "it";
 
-const Navbar: React.FC<NavbarProps> = ({ onSelectCommand }) => {
+    return [
+        { label: "About", command: "about", id: "About-me" },
+        { label: "Skills", command: "skills", id: "Skills" },
+        { label: "Projects", command: "projects", id: "Projects" },
+        { label: "Experience", command: "experience", id: "Experience" },
+        { label: "Contact", command: "contact", id: "Contact" },
+        { label: "Help", command: "help", id: "Help" },
+        { label: "Clear", command: "clear", id: "Clear" },
+        {
+            label: `Lang (${targetLang.toUpperCase()})`,
+            command: `lang ${targetLang}`,
+            id: "Language",
+        },
+    ];
+};
+
+const Navbar: React.FC<NavbarProps> = ({ onSelectCommand, currentLanguage }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navLinks = useMemo(() => buildNavLinks(currentLanguage), [currentLanguage]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,7 +52,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSelectCommand }) => {
     };
 
     return (
-
         <>
             <button
                 type="button"
@@ -65,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSelectCommand }) => {
                 >
                     <div className="navbar__inner">
                         <ul className="navbar__links">
-                            {NAV_LINKS.map(({ label, command, id }) => (
+                            {navLinks.map(({ label, command, id }) => (
                                 <li key={command} className="navbar__item">
                                     <button
                                         type="button"

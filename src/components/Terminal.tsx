@@ -86,7 +86,12 @@ export const Terminal: React.FC = () => {
   }, [lines]);
 
   const handleCommand = (command: string) => {
-    if (!command.trim()) return;
+    const trimmedCommand = command.trim();
+
+    if (!trimmedCommand) return;
+
+    const [commandName] = trimmedCommand.split(" ");
+    const normalizedCommandName = commandName.toLowerCase();
 
     if (showOnboarding) {
       dismissOnboarding();
@@ -101,7 +106,7 @@ export const Terminal: React.FC = () => {
     resetHistoryIndex();
 
     // Handle clear command specially
-    if (command.trim().toLowerCase() === "clear") {
+    if (trimmedCommand.toLowerCase() === "clear") {
       setLines([...welcomeLines]);
       return;
     }
@@ -123,7 +128,13 @@ export const Terminal: React.FC = () => {
     }
 
     // If language was changed, force a re-render to update welcome message
-    if (command.toLowerCase().startsWith("lang ")) {
+    if (normalizedCommandName === "lang" || normalizedCommandName === "language") {
+      const newLocale = commandProcessor.getCurrentLanguage();
+
+      if (newLocale !== uiLocale) {
+        setUiLocale(newLocale);
+      }
+
       setTimeout(() => {
         forceUpdate({});
         // Update welcome lines with new language
@@ -196,7 +207,7 @@ export const Terminal: React.FC = () => {
         <meta property="og:image" content="https://niccolo.dev/preview.jpg" />
       </Helmet>
       <div className="h-screen bg-terminal-bg text-terminal-fg font-mono flex flex-col min-h-0">
-        <Navbar onSelectCommand={handleCommand} />
+        <Navbar onSelectCommand={handleCommand} currentLanguage={uiLocale} />
         {showOnboarding && (
           <div className="fixed inset-0 z-40">
             <div
