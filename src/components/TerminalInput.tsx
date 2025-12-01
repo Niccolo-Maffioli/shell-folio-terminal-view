@@ -73,7 +73,10 @@ export const TerminalInput: React.FC<TerminalInputProps> = ({
   };
 
   return (
-    <div className="border-t border-gray-700 bg-gray-900/50">
+    <div
+      id="terminal-input-area"
+      className="border-t border-gray-700 bg-gray-900/50 rounded-b-md"
+    >
       {suggestions.length > 0 && (
         <div className="px-4 py-2 border-b border-gray-700">
           <div className="text-xs text-gray-400 mb-1">Suggestions:</div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { TerminalLine } from "./Terminal";
 import { AsciiAnimation } from "./AsciiAnimation";
+import profileImage from "../images/01_Nico serio.jpg";
 
 interface TerminalOutputProps {
   lines: TerminalLine[];
@@ -106,22 +107,48 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
     });
   };
 
+  const renderImageToken = (token: string) => {
+    if (token !== "<image=profile>") {
+      return null;
+    }
+
+    return (
+      <div className="my-4 flex justify-start">
+        <figure className="relative overflow-hidden rounded-2xl border border-terminal-cyan/30 bg-gradient-to-br from-gray-900/80 via-gray-900/40 to-gray-900/80 p-[3px] shadow-[0_12px_40px_rgba(6,182,212,0.18)]">
+          <div className="rounded-[1rem] bg-terminal-bg/80 p-2 backdrop-blur">
+            <img
+              src={profileImage}
+              alt="Portrait of Niccolò Maffioli"
+              className="h-40 w-40 rounded-xl object-cover grayscale transition duration-500 ease-out hover:grayscale-0 sm:h-48 sm:w-48"
+            />
+          </div>
+        </figure>
+      </div>
+    );
+  };
+
   const formatContent = (content: string, type: TerminalLine["type"]) => {
+    const trimmed = content.trim();
+
+    if (trimmed.startsWith("<image=")) {
+      return renderImageToken(trimmed);
+    }
+
     // Gestione link con sintassi <link=URL|Testo>
-    if (content.includes("<link=")) {
+    if (trimmed.includes("<link=")) {
       return renderWithNamedLinks(content);
     }
 
     // resto della formattazione esistente...
-    if (content.includes("ERROR:")) {
+    if (trimmed.includes("ERROR:")) {
       return <span className="text-terminal-red">{content}</span>;
     }
 
-    if (content.includes("SUCCESS:")) {
+    if (trimmed.includes("SUCCESS:")) {
       return <span className="text-terminal-green">{content}</span>;
     }
 
-    if (content.includes("drwx") || content.includes("-rw-")) {
+    if (trimmed.includes("drwx") || trimmed.includes("-rw-")) {
       const parts = content.split(/\s+/);
       return (
         <span>
@@ -134,7 +161,7 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
       );
     }
 
-    if (content.includes("{") || content.includes("}")) {
+    if (trimmed.includes("{") || trimmed.includes("}")) {
       return (
         <span
           className="text-terminal-cyan"
@@ -170,14 +197,18 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
           );
         }
 
+        const formatted = formatContent(line.content, line.type);
+
         return (
           <div
             key={line.id}
             className={`${getLineColor(line.type)} leading-relaxed`}
           >
-            <span className="whitespace-pre-wrap break-words">
-              {formatContent(line.content, line.type)}
-            </span>
+            {typeof formatted === "string" ? (
+              <span className="whitespace-pre-wrap break-words">{formatted}</span>
+            ) : (
+              formatted
+            )}
           </div>
         );
       })}
