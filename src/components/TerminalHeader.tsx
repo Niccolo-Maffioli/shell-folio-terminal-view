@@ -7,6 +7,18 @@ type TerminalHeaderProps = {
   onMaximize?: () => void;
   isMinimized?: boolean;
   isCompact?: boolean;
+  labels: {
+    title: string;
+    closeAria: string;
+    minimizeAria: {
+      default: string;
+      active: string;
+    };
+    compactAria: {
+      default: string;
+      active: string;
+    };
+  };
 };
 
 export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
@@ -15,6 +27,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
   onMaximize,
   isMinimized = false,
   isCompact = false,
+  labels,
 }) => {
   const dateLabel = new Intl.DateTimeFormat(undefined, {
     year: "numeric",
@@ -28,7 +41,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
         <div className="hidden items-center space-x-2 md:flex">
           <button
             className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 transition-colors hover:bg-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200/70"
-            aria-label="Chiudi terminale"
+            aria-label={labels.closeAria}
             onClick={onClose}
             type="button"
           >
@@ -38,7 +51,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             className={`flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 transition-colors hover:bg-yellow-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-200/70 ${
               isMinimized ? "ring-2 ring-yellow-200/70" : ""
             }`}
-            aria-label={isMinimized ? "Ripristina terminale" : "Minimizza terminale"}
+            aria-label={isMinimized ? labels.minimizeAria.active : labels.minimizeAria.default}
             aria-pressed={isMinimized}
             onClick={() => onMinimize?.()}
             type="button"
@@ -49,7 +62,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             className={`flex h-5 w-5 items-center justify-center rounded-full bg-green-500 transition-colors hover:bg-green-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-200/70 ${
               isCompact ? "ring-2 ring-green-200/70" : ""
             }`}
-            aria-label={isCompact ? "Ripristina dimensione terminale" : "Riduci terminale"}
+            aria-label={isCompact ? labels.compactAria.active : labels.compactAria.default}
             aria-pressed={isCompact}
             onClick={() => onMaximize?.()}
             type="button"
@@ -57,7 +70,7 @@ export const TerminalHeader: React.FC<TerminalHeaderProps> = ({
             <Square className="w-3 h-3 text-green-900" aria-hidden="true" />
           </button>
         </div>
-        <span className="ml-2 text-sm text-gray-300">Terminal - Portfolio</span>
+        <span className="ml-2 text-sm text-gray-300">{labels.title}</span>
       </div>
       <div className="text-xs text-gray-400">{dateLabel}</div>
     </header>

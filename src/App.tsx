@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { HelmetProvider } from "react-helmet-async";
 import TerminalLoading from "./components/TerminalLoading";
+import { TerminalProvider } from "./store/terminalStore";
 
 const queryClient = new QueryClient();
 
@@ -24,19 +25,21 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
+          <TerminalProvider>
+            <Toaster />
+            <Sonner />
 
-          {loading ? (
-            <TerminalLoading lang="en" onFinish={() => setLoading(false)}/>
-          ) : (
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          )}
+            {loading ? (
+              <TerminalLoading lang="en" onFinish={() => setLoading(false)} />
+            ) : (
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            )}
+          </TerminalProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>

@@ -21,8 +21,8 @@ Il design è realizzato con **Tailwind CSS** per uno styling rapido, modulare e 
 
 ## Requisiti
 
-* Node.js (versione >= 16)
-* npm o yarn
+* Node.js (versione >= 18)
+* pnpm (https://pnpm.io/installation)
 
 ---
 
@@ -43,9 +43,7 @@ cd shell-folio-terminal-view
 3. Installa le dipendenze
 
 ```bash
-npm install
-# oppure
-yarn install
+pnpm install
 ```
 
 ---
@@ -55,12 +53,10 @@ yarn install
 Per avviare il progetto in modalità sviluppo con hot-reload:
 
 ```bash
-npm start
-# oppure
-yarn start
+pnpm dev
 ```
 
-Apri [http://localhost:3000](http://localhost:3000) nel browser per vedere il sito.
+Apri [http://localhost:5173](http://localhost:5173) nel browser per vedere il sito.
 
 ---
 
@@ -69,12 +65,10 @@ Apri [http://localhost:3000](http://localhost:3000) nel browser per vedere il si
 Per creare una build ottimizzata per la produzione:
 
 ```bash
-npm run build
-# oppure
-yarn build
+pnpm build
 ```
 
-La build verrà generata nella cartella `build/`.
+La build verrà generata nella cartella `dist/`.
 
 ---
 

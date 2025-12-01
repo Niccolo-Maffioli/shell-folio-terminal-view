@@ -6,6 +6,8 @@ import { TerminalInput } from "./TerminalInput";
 import { CommandProcessor } from "../utils/commandProcessor";
 import { Helmet } from "react-helmet-async";
 import { useOnboarding } from "../hooks/useOnboarding";
+import { APP_STRINGS, LocaleCode } from "../locales/appContent";
+import { useTerminalStore } from "../store/terminalStore";
 
 export interface TerminalLine {
   id: string;
@@ -14,8 +16,6 @@ export interface TerminalLine {
   timestamp: Date;
 }
 
-type TerminalView = "normal" | "hidden" | "minimized" | "compact";
-
 // Create a single instance of CommandProcessor that persists across renders
 const commandProcessor = new CommandProcessor();
 
@@ -23,12 +23,20 @@ export const Terminal: React.FC = () => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [welcomeLines, setWelcomeLines] = useState<TerminalLine[]>([]);
   const [currentPath, setCurrentPath] = useState("~");
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
   const [, forceUpdate] = useState({}); // Force re-render when language changes
   const terminalRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-  const [terminalView, setTerminalView] = useState<TerminalView>("normal");
+  const [uiLocale, setUiLocale] = useState<LocaleCode>(() => commandProcessor.getCurrentLanguage());
+  const {
+    terminalView,
+    setTerminalView,
+    commandHistory,
+    pushCommandHistory,
+    historyIndex,
+    setHistoryIndex,
+    resetHistoryIndex,
+    setInputValue,
+  } = useTerminalStore();
   const {
     showOnboarding,
     onboardingStep,
@@ -44,6 +52,7 @@ export const Terminal: React.FC = () => {
     handlePrevOnboardingStep,
     handleOnboardingLocaleChange,
   } = useOnboarding();
+  const appStrings = APP_STRINGS[uiLocale];
   const isHidden = terminalView === "hidden";
   const isMinimized = terminalView === "minimized";
   const isCompact = terminalView === "compact";
@@ -83,13 +92,13 @@ export const Terminal: React.FC = () => {
       dismissOnboarding();
     }
 
-    setTerminalView((state) =>
-      state === "hidden" || state === "minimized" ? "normal" : state
-    );
+    if (terminalView === "hidden" || terminalView === "minimized") {
+      setTerminalView("normal");
+    }
 
     // Add command to history
-    setCommandHistory((prev) => [...prev, command]);
-    setHistoryIndex(-1);
+    pushCommandHistory(command);
+    resetHistoryIndex();
 
     // Handle clear command specially
     if (command.trim().toLowerCase() === "clear") {
@@ -140,8 +149,11 @@ export const Terminal: React.FC = () => {
     setLines((prev) => [...prev, commandLine, ...outputLines]);
   };
 
-  const getCommandFromHistory = (direction: "up" | "down"): string => {
-    if (commandHistory.length === 0) return "";
+  const navigateHistory = (direction: "up" | "down") => {
+    if (commandHistory.length === 0) {
+      setInputValue("");
+      return;
+    }
 
     let newIndex = historyIndex;
 
@@ -158,21 +170,17 @@ export const Terminal: React.FC = () => {
     }
 
     setHistoryIndex(newIndex);
-    return newIndex === -1 ? "" : commandHistory[newIndex];
+    setInputValue(newIndex === -1 ? "" : commandHistory[newIndex]);
   };
 
   const handleCloseTerminal = () => setTerminalView("hidden");
 
   const handleToggleMinimize = () => {
-    setTerminalView((state) =>
-      state === "minimized" ? "normal" : "minimized"
-    );
+    setTerminalView(terminalView === "minimized" ? "normal" : "minimized");
   };
 
   const handleToggleMaximize = () => {
-    setTerminalView((state) =>
-      state === "compact" ? "normal" : "compact"
-    );
+    setTerminalView(terminalView === "compact" ? "normal" : "compact");
   };
 
   const handleRestoreTerminal = () => setTerminalView("normal");
@@ -180,12 +188,9 @@ export const Terminal: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Niccolò Maffioli | Web Developer</title>
-        <meta
-          name="description"
-          content="Portfolio personale di Niccolò Maffioli, sviluppatore front-end specializzato in React, TypeScript e Tailwind."
-        />
-        <meta property="og:title" content="Niccolò Maffioli | Full-Stack Developer" />
+        <title>{appStrings.meta.title}</title>
+        <meta name="description" content={appStrings.meta.description} />
+        <meta property="og:title" content={appStrings.meta.ogTitle} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://niccolo.dev/works" />
         <meta property="og:image" content="https://niccolo.dev/preview.jpg" />
@@ -264,7 +269,7 @@ export const Terminal: React.FC = () => {
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                             }`}
                             aria-pressed={onboardingLocale === "en"}
-                            aria-label="Tour language: English"
+                            aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
                           >
                             EN
                           </button>
@@ -277,7 +282,7 @@ export const Terminal: React.FC = () => {
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                             }`}
                             aria-pressed={onboardingLocale === "it"}
-                            aria-label="Tour language: Italiano"
+                            aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
                           >
                             IT
                           </button>
@@ -291,6 +296,7 @@ export const Terminal: React.FC = () => {
                         type="button"
                         onClick={dismissOnboarding}
                         className="rounded-full border border-terminal-cyan/50 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
+                        aria-label={strings.controlsAria.skip(onboardingStep, totalSteps)}
                       >
                         {strings.skipLabel}
                       </button>
@@ -298,6 +304,7 @@ export const Terminal: React.FC = () => {
                         type="button"
                         onClick={handleNextOnboardingStep}
                         className="rounded-full bg-terminal-cyan/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-terminal-bg transition hover:bg-terminal-cyan"
+                        aria-label={strings.controlsAria.next(onboardingStep, totalSteps)}
                       >
                         {strings.nextLabel}
                       </button>
@@ -371,7 +378,7 @@ export const Terminal: React.FC = () => {
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                             }`}
                             aria-pressed={onboardingLocale === "en"}
-                            aria-label="Tour language: English"
+                            aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
                           >
                             EN
                           </button>
@@ -384,7 +391,7 @@ export const Terminal: React.FC = () => {
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                             }`}
                             aria-pressed={onboardingLocale === "it"}
-                            aria-label="Tour language: Italiano"
+                            aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
                           >
                             IT
                           </button>
@@ -405,6 +412,7 @@ export const Terminal: React.FC = () => {
                         type="button"
                         onClick={handlePrevOnboardingStep}
                         className="rounded-full border border-terminal-cyan/50 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
+                        aria-label={strings.controlsAria.back(onboardingStep, totalSteps)}
                       >
                         {strings.backLabel}
                       </button>
@@ -412,6 +420,7 @@ export const Terminal: React.FC = () => {
                         type="button"
                         onClick={dismissOnboarding}
                         className="rounded-full bg-terminal-cyan/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-terminal-bg transition hover:bg-terminal-cyan"
+                        aria-label={strings.controlsAria.done(onboardingStep, totalSteps)}
                       >
                         {strings.doneLabel}
                       </button>
@@ -426,14 +435,14 @@ export const Terminal: React.FC = () => {
         {isHidden ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
             <p className="text-sm text-gray-400">
-              Terminal nascosto. Premi per riaprirlo.
+              {appStrings.terminal.hiddenMessage}
             </p>
             <button
               type="button"
               className="rounded-full border border-terminal-cyan px-6 py-2 text-sm font-medium text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
               onClick={handleRestoreTerminal}
             >
-              Riapri terminale
+              {appStrings.terminal.reopenLabel}
             </button>
           </div>
         ) : (
@@ -456,16 +465,17 @@ export const Terminal: React.FC = () => {
               onMaximize={handleToggleMaximize}
               isMinimized={isMinimized}
               isCompact={isCompact}
+              labels={appStrings.header}
             />
             {isMinimized ? (
               <div className="flex items-center justify-between rounded-b-md border-t border-gray-700 bg-gray-900/80 px-4 py-3 text-xs text-gray-400 sm:text-sm">
-                <span>Terminal minimizzato. Premi ripristina per continuare.</span>
+                <span>{appStrings.terminal.minimizedMessage}</span>
                 <button
                   type="button"
                   onClick={handleRestoreTerminal}
                   className="rounded-full border border-terminal-cyan/60 px-3 py-1 text-xs font-medium text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
                 >
-                  Ripristina
+                  {appStrings.terminal.restoreLabel}
                 </button>
               </div>
             ) : (
@@ -479,7 +489,9 @@ export const Terminal: React.FC = () => {
                 <TerminalInput
                   currentPath={currentPath}
                   onCommand={handleCommand}
-                  onHistoryNavigation={getCommandFromHistory}
+                  onHistoryNavigation={navigateHistory}
+                  placeholder={appStrings.terminal.input.placeholder}
+                  suggestionsLabel={appStrings.terminal.input.suggestionsLabel}
                 />
               </>
             )}

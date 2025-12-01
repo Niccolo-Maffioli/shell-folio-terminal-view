@@ -4,138 +4,24 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import {
+  APP_STRINGS,
+  LocaleCode,
+  OnboardingCopy,
+} from "../locales/appContent";
+import {
+  createSpotlightCalculator,
+  SpotlightHighlight,
+} from "../utils/onboardingHighlight";
 
-export type OnboardingLocale = "en" | "it";
-
-export interface OnboardingHighlight {
-  x: number;
-  y: number;
-  radius: number;
-  width: number;
-  height: number;
-  shape: "circle" | "rounded";
-}
-
-interface StepTip {
-  id: string;
-  content: React.ReactNode;
-}
-
-interface StepCopy {
-  title: string;
-  body: () => React.ReactNode;
-  tips: StepTip[];
-}
-
-interface OnboardingCopy {
-  stepIndicator: (current: number, total: number) => string;
-  languageLabel: string;
-  skipLabel: string;
-  nextLabel: string;
-  backLabel: string;
-  doneLabel: string;
-  continueHint: string;
-  closeHint: string;
-  step1: StepCopy;
-  step2: StepCopy;
-}
-
-const TOTAL_ONBOARDING_STEPS = 2;
-
-const ONBOARDING_COPY: Record<OnboardingLocale, OnboardingCopy> = {
-  en: {
-    stepIndicator: (current, total) => `Step ${current} of ${total}`,
-    languageLabel: "Language",
-    skipLabel: "Skip tour",
-    nextLabel: "Next",
-    backLabel: "Back",
-    doneLabel: "Got it",
-    continueHint: "Press Enter to continue • Esc to skip",
-    closeHint: "Press Enter to close • Esc to skip",
-    step1: {
-      title: "Open the quick menu",
-      body: () =>
-        "Use the button on the right side of the top bar to jump straight to each section without typing commands.",
-      tips: [],
-    },
-    step2: {
-      title: "Run your first command",
-      body: () => (
-        <>
-          In the prompt below type{" "}
-          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">help</kbd>{" "}
-          to see the available commands, or{" "}
-          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">about</kbd>{" "}
-          to learn more about my background.
-        </>
-      ),
-      tips: [
-        {
-          id: "history",
-          content: "↑ / ↓ to browse history",
-        },
-        {
-          id: "tab",
-          content: (
-            <>
-              <kbd className="rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase text-terminal-cyan">tab</kbd>{" "}
-              to auto-complete
-            </>
-          ),
-        },
-      ],
-    },
-  },
-  it: {
-    stepIndicator: (current, total) => `Step ${current} di ${total}`,
-    languageLabel: "Lingua",
-    skipLabel: "Salta tour",
-    nextLabel: "Avanti",
-    backLabel: "Indietro",
-    doneLabel: "Ho capito",
-    continueHint: "Premi Invio per continuare • Esc per saltare",
-    closeHint: "Premi Invio per chiudere • Esc per saltare",
-    step1: {
-      title: "Apri il menu rapido",
-      body: () =>
-        "Usa il pulsante sulla destra della barra superiore per saltare direttamente alle sezioni del portfolio senza digitare comandi.",
-      tips: [],
-    },
-    step2: {
-      title: "Digita un comando",
-      body: () => (
-        <>
-          Nel prompt in basso scrivi{" "}
-          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">help</kbd>{" "}
-          per vedere i comandi, oppure{" "}
-          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">about</kbd>{" "}
-          per conoscere la mia storia.
-        </>
-      ),
-      tips: [
-        {
-          id: "cronologia",
-          content: "↑ / ↓ per scorrere la cronologia",
-        },
-        {
-          id: "tab",
-          content: (
-            <>
-              <kbd className="rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase text-terminal-cyan">tab</kbd>{" "}
-              per completare
-            </>
-          ),
-        },
-      ],
-    },
-  },
-};
+export type OnboardingLocale = LocaleCode;
+export type OnboardingHighlight = SpotlightHighlight;
 
 interface UseOnboardingOptions {
   localStorageKey?: string;
   toggleSelector?: string;
   focusSelector?: string;
-  totalSteps?: number;
+  totalStepsOverride?: number;
 }
 
 export const useOnboarding = (
@@ -143,18 +29,23 @@ export const useOnboarding = (
     localStorageKey = "terminal-onboarding",
     toggleSelector = ".navbar__toggle",
     focusSelector = "#terminal-input-area",
-    totalSteps = TOTAL_ONBOARDING_STEPS,
+    totalStepsOverride,
   }: UseOnboardingOptions = {}
 ) => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [onboardingLocale, setOnboardingLocale] = useState<OnboardingLocale>("en");
   const [highlight, setHighlight] = useState<OnboardingHighlight | null>(null);
+  const spotlightCalculator = useMemo(
+    () => createSpotlightCalculator(),
+    [focusSelector, toggleSelector]
+  );
 
-  const strings = useMemo(
-    () => ONBOARDING_COPY[onboardingLocale],
+  const strings: OnboardingCopy = useMemo(
+    () => APP_STRINGS[onboardingLocale].onboarding,
     [onboardingLocale]
   );
+  const totalSteps = totalStepsOverride ?? strings.totalSteps;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -188,53 +79,28 @@ export const useOnboarding = (
       return;
     }
 
-    if (onboardingStep === 1) {
-      const toggle = document.querySelector(toggleSelector) as HTMLElement | null;
-      if (toggle) {
-        const rect = toggle.getBoundingClientRect();
-        const padding = 36;
-        const radius = Math.max(rect.width, rect.height) / 2 + padding;
-        setHighlight({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-          radius,
-          width: rect.width + padding * 2,
-          height: rect.height + padding * 2,
-          shape: "circle",
-        });
-        return;
-      }
-    } else {
-      const focusElement = document.querySelector(focusSelector) as HTMLElement | null;
-      if (focusElement) {
-        const rect = focusElement.getBoundingClientRect();
-        const horizontalPadding = 60;
-        const verticalPadding = 32;
-        const width = rect.width + horizontalPadding * 2;
-        const height = rect.height + verticalPadding * 2;
-        const radius = Math.max(width, height) / 2;
-        setHighlight({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-          radius,
-          width,
-          height,
-          shape: "rounded",
-        });
-        return;
-      }
+    const nextHighlight = spotlightCalculator.compute({
+      step: onboardingStep,
+      toggleSelector,
+      focusSelector,
+      circlePadding: 36,
+      roundedPadding: { horizontal: 60, vertical: 32 },
+      fallbackRadius: { circle: 140, rounded: 220 },
+    });
+
+    if (!nextHighlight) {
+      setHighlight(null);
+      return;
     }
 
-    const fallbackRadius = onboardingStep === 1 ? 140 : 220;
-    setHighlight({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-      radius: fallbackRadius,
-      width: fallbackRadius * 2,
-      height: fallbackRadius * 2,
-      shape: onboardingStep === 1 ? "circle" : "rounded",
-    });
-  }, [focusSelector, onboardingStep, showOnboarding, toggleSelector]);
+    setHighlight(nextHighlight);
+  }, [
+    focusSelector,
+    onboardingStep,
+    showOnboarding,
+    spotlightCalculator,
+    toggleSelector,
+  ]);
 
   const overlayStyle = useMemo(() => {
     if (!highlight) return undefined;
