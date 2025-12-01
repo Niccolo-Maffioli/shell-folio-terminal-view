@@ -24,6 +24,115 @@ interface OnboardingHighlight {
   shape: "circle" | "rounded";
 }
 
+type OnboardingLocale = "en" | "it";
+
+const TOTAL_ONBOARDING_STEPS = 2;
+
+const ONBOARDING_COPY: Record<OnboardingLocale, {
+  stepIndicator: (current: number, total: number) => string;
+  languageLabel: string;
+  skipLabel: string;
+  nextLabel: string;
+  backLabel: string;
+  doneLabel: string;
+  continueHint: string;
+  closeHint: string;
+  step1: {
+    title: string;
+    body: () => React.ReactNode;
+  };
+  step2: {
+    title: string;
+    body: () => React.ReactNode;
+    tips: Array<{ id: string; content: React.ReactNode }>;
+  };
+}> = {
+  en: {
+    stepIndicator: (current, total) => `Step ${current} of ${total}`,
+    languageLabel: "Language",
+    skipLabel: "Skip tour",
+    nextLabel: "Next",
+    backLabel: "Back",
+    doneLabel: "Got it",
+    continueHint: "Press Enter to continue • Esc to skip",
+    closeHint: "Press Enter to close • Esc to skip",
+    step1: {
+      title: "Open the quick menu",
+      body: () =>
+        "Use the button on the right side of the top bar to jump straight to each section without typing commands.",
+    },
+    step2: {
+      title: "Run your first command",
+      body: () => (
+        <>
+          In the prompt below type{" "}
+          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">help</kbd>{" "}
+          to see the available commands, or{" "}
+          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">about</kbd>{" "}
+          to learn more about my background.
+        </>
+      ),
+      tips: [
+        {
+          id: "history",
+          content: "↑ / ↓ to browse history",
+        },
+        {
+          id: "tab",
+          content: (
+            <>
+              <kbd className="rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase text-terminal-cyan">tab</kbd>{" "}
+              to auto-complete
+            </>
+          ),
+        },
+      ],
+    },
+  },
+  it: {
+    stepIndicator: (current, total) => `Step ${current} di ${total}`,
+    languageLabel: "Lingua",
+    skipLabel: "Salta tour",
+    nextLabel: "Avanti",
+    backLabel: "Indietro",
+    doneLabel: "Ho capito",
+    continueHint: "Premi Invio per continuare • Esc per saltare",
+    closeHint: "Premi Invio per chiudere • Esc per saltare",
+    step1: {
+      title: "Apri il menu rapido",
+      body: () =>
+        "Usa il pulsante sulla destra della barra superiore per saltare direttamente alle sezioni del portfolio senza digitare comandi.",
+    },
+    step2: {
+      title: "Digita un comando",
+      body: () => (
+        <>
+          Nel prompt in basso scrivi{" "}
+          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">help</kbd>{" "}
+          per vedere i comandi, oppure{" "}
+          <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">about</kbd>{" "}
+          per conoscere la mia storia.
+        </>
+      ),
+      tips: [
+        {
+          id: "cronologia",
+          content: "↑ / ↓ per scorrere la cronologia",
+        },
+        {
+          id: "tab",
+          content: (
+            <>
+              <kbd className="rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase text-terminal-cyan">tab</kbd>{" "}
+              per completare
+            </>
+          ),
+        },
+      ],
+    },
+  },
+};
+
 // Create a single instance of CommandProcessor that persists across renders
 const commandProcessor = new CommandProcessor();
 
@@ -39,6 +148,7 @@ export const Terminal: React.FC = () => {
   const [terminalView, setTerminalView] = useState<TerminalView>("normal");
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
+  const [onboardingLocale, setOnboardingLocale] = useState<OnboardingLocale>("en");
   const [highlight, setHighlight] = useState<OnboardingHighlight | null>(null);
   const isHidden = terminalView === "hidden";
   const isMinimized = terminalView === "minimized";
@@ -65,10 +175,11 @@ export const Terminal: React.FC = () => {
   const dismissOnboarding = useCallback(() => {
     setShowOnboarding(false);
     setOnboardingStep(1);
+    setOnboardingLocale("en");
     if (typeof window !== "undefined") {
       window.localStorage.setItem("terminal-onboarding", "seen");
     }
-  }, []);
+  }, [setOnboardingLocale]);
 
   const handleNextOnboardingStep = useCallback(() => {
     setOnboardingStep((step) => (step >= 2 ? 2 : step + 1));
@@ -191,6 +302,12 @@ export const Terminal: React.FC = () => {
     const top = Math.max(highlight.y - highlight.height / 2 - 240, 80);
     return { left, top };
   }, [highlight, onboardingStep]);
+
+  const strings = ONBOARDING_COPY[onboardingLocale];
+
+  const handleOnboardingLocaleChange = useCallback((locale: OnboardingLocale) => {
+    setOnboardingLocale(locale);
+  }, [setOnboardingLocale]);
 
   useEffect(() => {
     if (!showOnboarding) return;
@@ -402,28 +519,63 @@ export const Terminal: React.FC = () => {
                   }}
                 >
                   <div className="rounded-2xl border border-terminal-cyan/40 bg-gray-900/95 p-6 shadow-[0_24px_60px_rgba(6,182,212,0.28)]">
-                    <p className="text-xs uppercase tracking-[0.35em] text-terminal-cyan/70">Step 1 di 2</p>
-                    <h2 className="mt-2 text-xl font-semibold text-terminal-cyan">Apri il menu rapido</h2>
-                    <p className="mt-3 text-sm text-gray-300">
-                      Usa il pulsante sulla destra della barra superiore per saltare direttamente alle sezioni del portfolio senza digitare comandi.
-                    </p>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="uppercase tracking-[0.35em] text-terminal-cyan/70">
+                        {strings.stepIndicator(onboardingStep, TOTAL_ONBOARDING_STEPS)}
+                      </span>
+                      <div className="flex items-center gap-1 text-[11px] font-medium text-gray-400">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">
+                          {strings.languageLabel}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => handleOnboardingLocaleChange("en")}
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                              onboardingLocale === "en"
+                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                            }`}
+                            aria-pressed={onboardingLocale === "en"}
+                            aria-label="Tour language: English"
+                          >
+                            EN
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleOnboardingLocaleChange("it")}
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                              onboardingLocale === "it"
+                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                            }`}
+                            aria-pressed={onboardingLocale === "it"}
+                            aria-label="Tour language: Italiano"
+                          >
+                            IT
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <h2 className="mt-3 text-xl font-semibold text-terminal-cyan">{strings.step1.title}</h2>
+                    <p className="mt-3 text-sm text-gray-300">{strings.step1.body()}</p>
                     <div className="mt-6 flex items-center justify-between text-xs text-gray-500">
                       <button
                         type="button"
                         onClick={dismissOnboarding}
                         className="rounded-full border border-terminal-cyan/50 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
                       >
-                        Salta tour
+                        {strings.skipLabel}
                       </button>
                       <button
                         type="button"
                         onClick={handleNextOnboardingStep}
                         className="rounded-full bg-terminal-cyan/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-terminal-bg transition hover:bg-terminal-cyan"
                       >
-                        Avanti
+                        {strings.nextLabel}
                       </button>
                     </div>
-                    <p className="mt-4 text-center text-[11px] text-gray-500">Premi Invio per continuare • Esc per saltare</p>
+                    <p className="mt-4 text-center text-[11px] text-gray-500">{strings.continueHint}</p>
                   </div>
                 </div>
               </>
@@ -474,32 +626,70 @@ export const Terminal: React.FC = () => {
                   }}
                 >
                   <div className="rounded-2xl border border-terminal-cyan/40 bg-gray-900/95 p-6 shadow-[0_24px_60px_rgba(6,182,212,0.28)]">
-                    <p className="text-xs uppercase tracking-[0.35em] text-terminal-cyan/70">Step 2 di 2</p>
-                    <h2 className="mt-2 text-xl font-semibold text-terminal-cyan">Digita un comando</h2>
-                    <p className="mt-3 text-sm text-gray-300">
-                      Nel prompt in basso scrivi <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">help</kbd> per vedere i comandi, oppure <kbd className="rounded bg-gray-800 px-2 py-1 text-xs uppercase tracking-wide text-terminal-cyan">about</kbd> per conoscere la mia storia.
-                    </p>
-                    <ul className="mt-4 space-y-1 text-xs text-gray-400">
-                      <li>• ↑ / ↓ per scorrere la cronologia</li>
-                      <li>• <kbd className="rounded bg-gray-800 px-1.5 py-0.5 text-[10px] uppercase text-terminal-cyan">tab</kbd> per completare</li>
-                    </ul>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="uppercase tracking-[0.35em] text-terminal-cyan/70">
+                        {strings.stepIndicator(onboardingStep, TOTAL_ONBOARDING_STEPS)}
+                      </span>
+                      <div className="flex items-center gap-1 text-[11px] font-medium text-gray-400">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">
+                          {strings.languageLabel}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => handleOnboardingLocaleChange("en")}
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                              onboardingLocale === "en"
+                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                            }`}
+                            aria-pressed={onboardingLocale === "en"}
+                            aria-label="Tour language: English"
+                          >
+                            EN
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleOnboardingLocaleChange("it")}
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                              onboardingLocale === "it"
+                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                            }`}
+                            aria-pressed={onboardingLocale === "it"}
+                            aria-label="Tour language: Italiano"
+                          >
+                            IT
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <h2 className="mt-3 text-xl font-semibold text-terminal-cyan">{strings.step2.title}</h2>
+                    <p className="mt-3 text-sm text-gray-300">{strings.step2.body()}</p>
+                    {strings.step2.tips.length > 0 && (
+                      <ul className="mt-4 space-y-1 text-xs text-gray-400">
+                        {strings.step2.tips.map(({ id, content }) => (
+                          <li key={id}>• {content}</li>
+                        ))}
+                      </ul>
+                    )}
                     <div className="mt-6 flex items-center justify-between text-xs text-gray-500">
                       <button
                         type="button"
                         onClick={handlePrevOnboardingStep}
                         className="rounded-full border border-terminal-cyan/50 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wide text-terminal-cyan transition-colors hover:bg-terminal-cyan hover:text-terminal-bg"
                       >
-                        Indietro
+                        {strings.backLabel}
                       </button>
                       <button
                         type="button"
                         onClick={dismissOnboarding}
                         className="rounded-full bg-terminal-cyan/90 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-terminal-bg transition hover:bg-terminal-cyan"
                       >
-                        Ho capito
+                        {strings.doneLabel}
                       </button>
                     </div>
-                    <p className="mt-4 text-center text-[11px] text-gray-500">Premi Invio per chiudere • Esc per saltare</p>
+                    <p className="mt-4 text-center text-[11px] text-gray-500">{strings.closeHint}</p>
                   </div>
                 </div>
               </>
