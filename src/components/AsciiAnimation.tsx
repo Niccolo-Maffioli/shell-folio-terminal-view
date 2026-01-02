@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 const message = [
   "Accesso segreto riconosciuto...",
-  "Ciao 👨‍💻",
+  "Ciao",
   "Hai sbloccato il terminale nascosto.",
-  "Ecco un biscotto virtuale 🍪",
+  "Ecco un biscotto virtuale",
 ];
 
 const ledFrames = [

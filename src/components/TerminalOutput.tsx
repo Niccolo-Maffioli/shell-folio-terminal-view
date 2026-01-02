@@ -191,7 +191,7 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
         if (line.content === "::easteregg_nico::") {
           return (
             <div key={line.id} className="text-green-400 animate-pulse">
-              <p>✨ Ciao! Hai trovato l'easter egg! ✨</p>
+              <p>Ciao! Hai trovato l'easter egg!</p>
               <AsciiAnimation />
             </div>
           );
