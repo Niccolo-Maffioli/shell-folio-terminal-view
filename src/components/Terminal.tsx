@@ -6,7 +6,7 @@ import { TerminalInput } from "./TerminalInput";
 import { CommandProcessor } from "../utils/commandProcessor";
 import { Helmet } from "react-helmet-async";
 import { useOnboarding } from "../hooks/useOnboarding";
-import { APP_STRINGS, LocaleCode } from "../locales/appContent";
+import { APP_STRINGS } from "../locales/appContent";
 import { useTerminalStore } from "../store/terminalStore";
 
 export interface TerminalLine {
@@ -23,10 +23,8 @@ export const Terminal: React.FC = () => {
   const [lines, setLines] = useState<TerminalLine[]>([]);
   const [welcomeLines, setWelcomeLines] = useState<TerminalLine[]>([]);
   const [currentPath, setCurrentPath] = useState("~");
-  const [, forceUpdate] = useState({}); // Force re-render when language changes
   const terminalRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-  const [uiLocale, setUiLocale] = useState<LocaleCode>(() => commandProcessor.getCurrentLanguage());
   const {
     terminalView,
     setTerminalView,
@@ -36,6 +34,8 @@ export const Terminal: React.FC = () => {
     setHistoryIndex,
     resetHistoryIndex,
     setInputValue,
+    locale,
+    setLocale,
   } = useTerminalStore();
   const {
     showOnboarding,
@@ -52,10 +52,22 @@ export const Terminal: React.FC = () => {
     handlePrevOnboardingStep,
     handleOnboardingLocaleChange,
   } = useOnboarding();
-  const appStrings = APP_STRINGS[uiLocale];
+  const appStrings = APP_STRINGS[locale];
   const isHidden = terminalView === "hidden";
   const isMinimized = terminalView === "minimized";
   const isCompact = terminalView === "compact";
+
+  useEffect(() => {
+    const { overflow, overflowX, overflowY } = document.body.style;
+    document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.overflowX = overflowX;
+      document.body.style.overflowY = overflowY;
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -131,13 +143,11 @@ export const Terminal: React.FC = () => {
     if (normalizedCommandName === "lang" || normalizedCommandName === "language") {
       const newLocale = commandProcessor.getCurrentLanguage();
 
-      if (newLocale !== uiLocale) {
-        setUiLocale(newLocale);
+      if (newLocale !== locale) {
+        setLocale(newLocale);
       }
 
       setTimeout(() => {
-        forceUpdate({});
-        // Update welcome lines with new language
         const newWelcomeContent = commandProcessor.getWelcomeMessage(isMobile);
         const newWelcomeLines = newWelcomeContent.map((content, index) => ({
           id: `welcome-${index}`,
@@ -207,7 +217,7 @@ export const Terminal: React.FC = () => {
         <meta property="og:image" content="https://niccolo.dev/preview.jpg" />
       </Helmet>
       <div className="h-screen bg-terminal-bg text-terminal-fg font-mono flex flex-col min-h-0">
-        <Navbar onSelectCommand={handleCommand} currentLanguage={uiLocale} />
+        <Navbar onSelectCommand={handleCommand} currentLanguage={locale} />
         {showOnboarding && (
           <div className="fixed inset-0 z-40">
             <div
@@ -275,8 +285,8 @@ export const Terminal: React.FC = () => {
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("en")}
                             className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "en"
-                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                              ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                              : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                               }`}
                             aria-pressed={onboardingLocale === "en"}
                             aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
@@ -287,8 +297,8 @@ export const Terminal: React.FC = () => {
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("it")}
                             className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "it"
-                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                              ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                              : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                               }`}
                             aria-pressed={onboardingLocale === "it"}
                             aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
@@ -382,8 +392,8 @@ export const Terminal: React.FC = () => {
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("en")}
                             className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "en"
-                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                              ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                              : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                               }`}
                             aria-pressed={onboardingLocale === "en"}
                             aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
@@ -394,8 +404,8 @@ export const Terminal: React.FC = () => {
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("it")}
                             className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "it"
-                                ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                                : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
+                              ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                              : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
                               }`}
                             aria-pressed={onboardingLocale === "it"}
                             aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
@@ -455,10 +465,10 @@ export const Terminal: React.FC = () => {
         ) : (
           <div
             className={` flex w-full min-h-0 flex-col rounded-md border border-gray-700/70 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 ease-out ${isMinimized
-                ? "flex-none max-h-28 overflow-hidden shadow-[0_8px_18px_rgba(15,23,42,0.35)]"
-                : isCompact
-                  ? "flex-none w-full max-w-4xl self-center h-[68vh] min-h-[360px] shadow-[0_18px_45px_rgba(6,182,212,0.28)]"
-                  : "flex-1 shadow-[0_12px_35px_rgba(15,23,42,0.45)]"
+              ? "flex-none max-h-28 overflow-hidden shadow-[0_8px_18px_rgba(15,23,42,0.35)]"
+              : isCompact
+                ? "flex-none w-full max-w-4xl self-center h-[68vh] min-h-[360px] shadow-[0_18px_45px_rgba(6,182,212,0.28)]"
+                : "flex-1 shadow-[0_12px_35px_rgba(15,23,42,0.45)]"
               } ${isCompact && !isMinimized
                 ? "ring-1 ring-terminal-cyan/40"
                 : ""
@@ -489,7 +499,7 @@ export const Terminal: React.FC = () => {
                   ref={terminalRef}
                   className="flex-1 min-h-0 overflow-y-auto px-4 pb-2 pt-4"
                 >
-                  <TerminalOutput lines={lines} locale={uiLocale} />
+                  <TerminalOutput lines={lines} locale={locale} />
                 </div>
                 <TerminalInput
                   currentPath={currentPath}

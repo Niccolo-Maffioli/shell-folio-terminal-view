@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import type { LocaleCode } from "../locales/appContent";
 
 export type TerminalView = "normal" | "hidden" | "minimized" | "compact";
 
@@ -7,6 +8,7 @@ interface TerminalStoreState {
   commandHistory: string[];
   historyIndex: number;
   inputValue: string;
+  locale: LocaleCode;
 }
 
 interface TerminalStoreActions {
@@ -18,6 +20,7 @@ interface TerminalStoreActions {
   resetHistoryIndex: () => void;
   setInputValue: (value: string) => void;
   resetInputValue: () => void;
+  setLocale: (locale: LocaleCode) => void;
 }
 
 export type TerminalStore = TerminalStoreState & TerminalStoreActions;
@@ -29,6 +32,7 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [commandHistory, setCommandHistoryState] = useState<string[]>([]);
   const [historyIndex, setHistoryIndexState] = useState(-1);
   const [inputValue, setInputValueState] = useState("");
+  const [locale, setLocaleState] = useState<LocaleCode>("en");
 
   const setTerminalView = useCallback((view: TerminalView) => {
     setTerminalViewState(view);
@@ -62,11 +66,16 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setInputValueState("");
   }, []);
 
+  const setLocale = useCallback((nextLocale: LocaleCode) => {
+    setLocaleState(nextLocale);
+  }, []);
+
   const value = useMemo<TerminalStore>(() => ({
     terminalView,
     commandHistory,
     historyIndex,
     inputValue,
+    locale,
     setTerminalView,
     pushCommandHistory,
     setCommandHistory,
@@ -75,11 +84,13 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     resetHistoryIndex,
     setInputValue,
     resetInputValue,
+    setLocale,
   }), [
     terminalView,
     commandHistory,
     historyIndex,
     inputValue,
+    locale,
     setTerminalView,
     pushCommandHistory,
     setCommandHistory,
@@ -88,6 +99,7 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     resetHistoryIndex,
     setInputValue,
     resetInputValue,
+    setLocale,
   ]);
 
   return (
