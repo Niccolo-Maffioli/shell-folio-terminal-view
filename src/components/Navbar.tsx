@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import "./Navbar.css";
-import { type LocaleCode } from "../locales/appContent";
+import { type LocaleCode, APP_STRINGS } from "../locales/appContent";
 
 interface NavbarProps {
     onSelectCommand: (command: string) => void;
@@ -12,17 +12,19 @@ type NavLink = { label: string; command: string; id: string };
 
 const buildNavLinks = (currentLanguage: LocaleCode): NavLink[] => {
     const targetLang = currentLanguage === "it" ? "en" : "it";
+    const navbarStrings = APP_STRINGS[currentLanguage].navbar;
 
     return [
-        { label: "About", command: "about", id: "About-me" },
-        { label: "Skills", command: "skills", id: "Skills" },
-        { label: "Projects", command: "projects", id: "Projects" },
-        { label: "Experience", command: "experience", id: "Experience" },
-        { label: "Contact", command: "contact", id: "Contact" },
-        { label: "Help", command: "help", id: "Help" },
-        { label: "Clear", command: "clear", id: "Clear" },
+        { label: navbarStrings.about, command: "about", id: "About-me" },
+        { label: navbarStrings.skills, command: "skills", id: "Skills" },
+        { label: navbarStrings.projects, command: "projects", id: "Projects" },
+        { label: navbarStrings.experience, command: "experience", id: "Experience" },
+        { label: navbarStrings.contact, command: "contact", id: "Contact" },
+        { label: navbarStrings.cv, command: "cv", id: "CV" },
+        { label: navbarStrings.help, command: "help", id: "Help" },
+        { label: navbarStrings.clear, command: "clear", id: "Clear" },
         {
-            label: `Lang (${targetLang.toUpperCase()})`,
+            label: navbarStrings.language(targetLang),
             command: `lang ${targetLang}`,
             id: "Language",
         },

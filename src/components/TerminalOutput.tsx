@@ -2,12 +2,26 @@ import React from "react";
 import { TerminalLine } from "./Terminal";
 import { AsciiAnimation } from "./AsciiAnimation";
 import profileImage from "../images/01_Nico serio.jpg";
+import { LocaleCode } from "../locales/appContent";
 
 interface TerminalOutputProps {
   lines: TerminalLine[];
+  locale: LocaleCode;
 }
 
-export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
+const CV_FILES: Record<LocaleCode, { href: string; filename: string }> = {
+  en: {
+    href: "/nico_cv_en.pdf",
+    filename: "Niccolo_Maffioli_CV_EN.pdf",
+  },
+  it: {
+    href: "/nico_cv_it.pdf",
+    filename: "Niccolo_Maffioli_CV_IT.pdf",
+  },
+};
+
+export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines, locale }) => {
+  const cvAsset = CV_FILES[locale] ?? CV_FILES.en;
   const getLineColor = (type: TerminalLine["type"]) => {
     switch (type) {
       case "command":
@@ -89,22 +103,26 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
       parts.push(text.slice(lastIndex));
     }
 
-    return parts.map((part, i) => {
-      if (typeof part === "string") {
-        return <span key={i}>{part}</span>;
-      }
-      return (
-        <a
-          key={i}
-          href={part.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline text-terminal-blue"
-        >
-          {part.label}
-        </a>
-      );
-    });
+    return (
+      <span className="whitespace-pre-wrap">
+        {parts.map((part, i) => {
+          if (typeof part === "string") {
+            return <React.Fragment key={i}>{part}</React.Fragment>;
+          }
+          return (
+            <a
+              key={i}
+              href={part.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-terminal-blue"
+            >
+              {part.label}
+            </a>
+          );
+        })}
+      </span>
+    );
   };
 
   const renderImageToken = (token: string) => {
@@ -193,6 +211,27 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({ lines }) => {
             <div key={line.id} className="text-green-400 animate-pulse">
               <p>Ciao! Hai trovato l'easter egg!</p>
               <AsciiAnimation />
+            </div>
+          );
+        }
+
+        if (line.content === "::download_cv::") {
+          return (
+            <div key={line.id} className="text-terminal-green">
+              <p>Downloading CV...</p>
+              <button
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = cvAsset.href;
+                  link.download = cvAsset.filename;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="mt-2 rounded bg-terminal-cyan px-4 py-2 text-terminal-bg hover:bg-terminal-cyan/80 transition-colors"
+              >
+                Download CV
+              </button>
             </div>
           );
         }

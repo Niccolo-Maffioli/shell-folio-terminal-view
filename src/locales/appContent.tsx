@@ -64,6 +64,18 @@ export interface TerminalHeaderCopy {
   };
 }
 
+export interface NavbarCopy {
+  about: string;
+  skills: string;
+  projects: string;
+  experience: string;
+  contact: string;
+  cv: string;
+  help: string;
+  clear: string;
+  language: (targetLang: string) => string;
+}
+
 export interface CommandLanguageCopy {
   changed: string;
   current: (current: LocaleCode) => string;
@@ -113,6 +125,7 @@ export interface AppCopy {
   meta: MetaCopy;
   terminal: TerminalUICopy;
   header: TerminalHeaderCopy;
+  navbar: NavbarCopy;
   onboarding: OnboardingCopy;
   commands: CommandCopy;
 }
@@ -146,6 +159,17 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         default: "Switch to compact terminal size",
         active: "Restore full terminal size",
       },
+    },
+    navbar: {
+      about: "About",
+      skills: "Skills",
+      projects: "Projects",
+      experience: "Experience",
+      contact: "Contact",
+      cv: "CV",
+      help: "Help",
+      clear: "Clear",
+      language: (targetLang) => `Lang (${targetLang.toUpperCase()})`,
     },
     onboarding: {
       totalSteps: 2,
@@ -247,6 +271,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "  • experience - Check my work experience",
           "  • education  - View my educational background",
           "  • contact    - Get my contact information",
+          "  • cv         - Download my CV",
           "  • blog       - My last articles",
           "",
           "Terminal Commands:",
@@ -275,6 +300,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "│  experience - Check my work experience       │",
           "│  education  - View my educational background │",
           "│  contact    - Get my contact information     │",
+          "│  cv         - Download my CV                 │",
           "└──────────────────────────────────────────────────┘",
           "",
           "┌─ Terminal Commands ──────────────────────────┐",
@@ -300,21 +326,13 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "═══════════",
         "",
         "<image=profile>",
-        "Full Stack Developer with over 4 years of continuous learning and project development.",
-        "building scalable web applications and solving complex problems.",
+        "Junior Full Stack Developer with a strong focus on Front-End development, specializing in React (TSX), Tailwind, and Vite.",
+        "Through my years of study, I have developed technical precision and a strong visual sensibility, crafting polished UI/UX interfaces using tools such as Figma.",
+        "I am a collaborative team player who also excels when working independently.",
+        "I am looking for a dynamic environment where I can grow as a developer and contribute to creating modern, intuitive digital experiences.",
         "",
-        "Specializations:",
-        "  • Frontend: React, TypeScript, JavaScript, Html, CSS",
-        "  • Backend: Node.js, Python, mySQL",
-        "  • DevOps: CI/CD, Infrastructure as Code",
-        "",
-        "What drives me:",
-        "  • Creating exceptional user experiences",
-        "  • Writing clean, maintainable code",
-        "  • Continuous learning and innovation",
-        "",
-        "Currently based in Milan, MI",
-        "Open to remote opportunities worldwide",
+        "I have a background in competitive artistic gymnastics and tennis, and more recently, I've taken up acrobatics and boxing.",
+        "I am passionate about collecting (especially manga), TV series, films, and gaming.",
         "",
       ],
       skills: [
@@ -332,11 +350,13 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Backend Development:",
         "  ▓▓▓░░ Node.js              (Intermediate)",
         "  ▓▓░░░ Python               (Basic)",
+        "  ▓▓░░░ Java                 (Basic)",
+        "  ▓░░░░ Spring Boot          (Familiar)",
         "  ▓▓░░░ PHP                  (Basic)",
         "  ▓▓▓▓░ RESTful APIs         (Advanced)",
         "",
         "Databases:",
-        "  ▓▓▓▓░ MySQL                (Advanced)",
+        "  ▓▓▓░░ MySQL                (Intermediate)",
         "  ▓░░░░ MongoDB              (Familiar)",
         "",
         "Cloud & DevOps:",
@@ -346,6 +366,9 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Tools & Others:",
         "  ▓▓▓▓░ Git/GitHub           (Advanced)",
         "  ▓▓▓▓▓ VS Code              (Expert)",
+        "",
+        "UI / UX:",
+        "  ▓▓▓▓░ Figma                (Advanced)",
         "",
       ],
       projects: [
@@ -382,6 +405,21 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "   ├─ Features: App where you search for ingredients, add them one by one, and using Spoonacular APIs finds recipes with those ingredients.",
         "   ├─ GitHub: -- (not available yet, will add later)",
         "   └─ <link=https://iamchef-maffioli.vercel.app/|I Am Chef>",
+        "",
+        "6. Moholes Platform",
+        "   ├─ Tech Stack: UI/UX Research, Figma",
+        "   ├─ Features: Internal publishing platform for Mohole School that lets students and staff share content with category and author-specific styling, comments, and personal author hubs. The concept remains open to future ideas and improvements.",
+        "   └─ <link=https://www.behance.net/gallery/138063725/Moholes?platform=direct|Behance Case Study>",
+        "",
+        "7. RetroTreasures",
+        "   ├─ Tech Stack: UI/UX, Figma",
+        "   ├─ Features: Curated marketplace app for vintage lovers to buy and sell authentic apparel, accessories, furniture, and collectibles, connecting sellers with buyers who appreciate the charm of past eras.",
+        "   └─ <link=https://www.behance.net/gallery/187278913/Retro-Treasures|Behance Case Study>",
+        "",
+        "8. GatherFeel",
+        "   ├─ Tech Stack: UI/UX, Figma",
+        "   ├─ Features: Collector-focused marketplace spanning vinyls, comics, coins, action figures, and antiques, with in-depth provenance details, advanced search, and exclusive auctions to surface culturally significant pieces.",
+        "   └─ <link=https://www.behance.net/gallery/242477357/GatherFeel|Behance Case Study>",
         "",
       ],
       experience: [
@@ -448,6 +486,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Professional Links:",
         "   <link=https://www.linkedin.com/in/niccolomaffioli/|LinkedIn Profile>",
         "   <link=https://github.com/Niccolo-Maffioli/|GitHub Profile>",
+        "   <link=https://www.behance.net/niccolmaffioli|Behance Portfolio>",
         "",
         "Let's Connect!",
         "   I'm always open to discussing new opportunities,",
@@ -525,6 +564,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "Email: nico.maffioli@gmail.com",
           "LinkedIn: https://www.linkedin.com/in/niccolomaffioli/",
           "GitHub: https://github.com/Niccolo-Maffioli",
+          "Behance: https://www.behance.net/niccolmaffioli",
         ],
       },
       errors: {
@@ -668,6 +708,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "  • experience - Controlla la mia esperienza",
           "  • education  - Visualizza la mia formazione",
           "  • contact    - Ottieni le mie informazioni",
+          "  • cv         - Scarica il mio CV",
           "  • blog       - i miei ultimi articoli",
           "",
           "Comandi Terminale:",
@@ -696,6 +737,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "│  experience - Controlla la mia esperienza   │",
           "│  education  - Visualizza la mia formazione  │",
           "│  contact    - Ottieni le mie informazioni   │",
+          "│  cv         - Scarica il mio CV             │",
           "└─────────────────────────────────────────────────┘",
           "",
           "┌─ Comandi Terminale ───────────────────────────┐",
@@ -721,21 +763,13 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "═══════════",
         "",
         "<image=profile>",
-        "Sviluppatore Full Stack con oltre 4 anni di apprendimento continuo e sviluppo di progetti.",
-        "nella creazione di applicazioni web scalabili e nella risoluzione di problemi complessi.",
+        "Junior Full Stack Developer con una forte propensione per il Front-End, specializzato in React (TSX), Tailwind e Vite.",
+        "Dopo i miei anni di studio ho acquisito precisione tecnica e sensibilità visiva, sviluppando interfacce curate in UI/UX utilizzando software come Figma.",
+        "Lavoro bene in gruppo ma sono anche autonomo.",
+        "Cerco un ambiente dinamico in cui crescere come sviluppatore e contribuire alla creazione di esperienze digitali moderne e intuitive.",
         "",
-        "Specializzazioni:",
-        "  • Frontend: React, TypeScript, CSS, HTML5",
-        "  • Backend: Node.js, Python, mySQL",
-        "  • DevOps: CI/CD, Infrastructure as Code",
-        "",
-        "Cosa mi motiva:",
-        "  • Creare esperienze utente eccezionali",
-        "  • Scrivere codice pulito e manutenibile",
-        "  • Apprendimento continuo e innovazione",
-        "",
-        "Attualmente a Milano, MI",
-        "Aperto a opportunità remote in tutto il mondo",
+        "Ho praticato ginnastica artistica e tennis a livello agonistico, più di recente acrobatica e pugilato.",
+        "Sono appassionato di collezionismo (specialmente di manga), di serie TV, di film e del mondo videoludico.",
         "",
       ],
       skills: [
@@ -753,11 +787,13 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Backend Development:",
         "  ▓▓▓░░ Node.js              (Intermedio)",
         "  ▓▓░░░ Python               (Basi)",
+        "  ▓▓░░░ Java                 (Basi)",
+        "  ▓░░░░ Spring Boot          (Familiarità)",
         "  ▓▓░░░ PHP                  (Basi)",
         "  ▓▓▓▓░ RESTful APIs         (Avanzato)",
         "",
         "Databases:",
-        "  ▓▓▓▓░ MySQL                (Avanzato)",
+        "  ▓▓▓░░ MySQL                (Intermedio)",
         "  ▓░░░░ MongoDB              (familiarità)",
         "",
         "Cloud & DevOps:",
@@ -767,6 +803,9 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Tools & Others:",
         "  ▓▓▓▓░ Git/GitHub           (Avanzato)",
         "  ▓▓▓▓▓ VS Code              (Esperto)",
+        "",
+        "UI / UX:",
+        "  ▓▓▓▓░ Figma                (Avanzato)",
         "",
       ],
       projects: [
@@ -803,6 +842,21 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "   ├─ Funzionalità: App in cui cerchi ingredienti, li aggiungi uno ad uno, e utilizzando le API di Spoonacular trova ricette con quegli ingredienti.",
         "   ├─ GitHub: -- (non disponibile per ora, lo aggiungerò dopo)",
         "   └─ <link=https://iamchef-maffioli.vercel.app/|I Am Chef>",
+        "",
+        "6. Moholes Platform",
+        "   ├─ Stack Tecnologico: UI/UX, prototipi Figma",
+        "   ├─ Funzionalità: Piattaforma interna per Scuola Mohole in cui studenti e personale pubblicano contenuti con differenziazione visiva per categorie e autori, commenti e spazi personali per raccogliere le pubblicazioni. Il concept rimane aperto a idee e suggerimenti.",
+        "   └─ <link=https://www.behance.net/gallery/138063725/Moholes?platform=direct|Case study su Behance>",
+        "",
+        "7. RetroTreasures",
+        "   ├─ Stack Tecnologico: UI/UX, Figma",
+        "   ├─ Funzionalità: App marketplace curata per appassionati di vintage che permette di comprare e vendere capi, accessori, arredi e pezzi da collezione autentici, mettendo in contatto venditori e acquirenti che amano il fascino delle epoche passate.",
+        "   └─ <link=https://www.behance.net/gallery/187278913/Retro-Treasures|Case study su Behance>",
+        "",
+        "8. GatherFeel",
+        "   ├─ Stack Tecnologico: UI/UX, Figma",
+        "   ├─ Funzionalità: Marketplace per collezionisti che copre vinili, fumetti, monete, action figure e oggetti d'epoca, con informazioni approfondite su storia e autenticità, ricerca avanzata e aste esclusive per scoprire pezzi unici di valore culturale.",
+        "   └─ <link=https://www.behance.net/gallery/242477357/GatherFeel|Case study su Behance>",
         "",
       ],
       experience: [
@@ -869,6 +923,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         "Link Professionali:",
         "   <link=https://www.linkedin.com/in/niccolomaffioli/|Profilo Linkedin>",
         "   <link=https://github.com/Niccolo-Maffioli/|GitHub>",
+        "   <link=https://www.behance.net/niccolmaffioli|Profilo Behance>",
         "",
         "Restiamo in contatto!",
         "   Sono sempre aperto a discutere nuove opportunità,",
@@ -946,6 +1001,7 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
           "Email: nico.maffioli@gmail.com",
           "LinkedIn: https://www.linkedin.com/in/niccolomaffioli/",
           "GitHub: https://github.com/Niccolo-Maffioli",
+          "Behance: https://www.behance.net/niccolmaffioli",
         ],
       },
       errors: {
@@ -958,6 +1014,17 @@ export const APP_STRINGS: Record<LocaleCode, AppCopy> = {
         catNotFound: (filename) =>
           `cat: ${filename}: File o directory non esistente`,
       },
+    },
+    navbar: {
+      about: "Su di me",
+      skills: "Competenze",
+      projects: "Progetti",
+      experience: "Esperienza",
+      contact: "Contatti",
+      cv: "CV",
+      help: "Aiuto",
+      clear: "Pulisci",
+      language: (targetLang) => `Lingua (${targetLang.toUpperCase()})`,
     },
   },
 };

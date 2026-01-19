@@ -58,4 +58,18 @@ describe("CommandProcessor", () => {
       APP_STRINGS.en.commands.errors.commandNotFound("does-not-exist"),
     ]);
   });
+
+  it("handles cv command", () => {
+    const result = processor.processCommand("cv", "~");
+
+    expect(result.type).toBe("output");
+    expect(result.output).toEqual(["::download_cv::"]);
+  });
+
+  it("handles download-cv command", () => {
+    const result = processor.processCommand("download-cv", "~");
+
+    expect(result.type).toBe("output");
+    expect(result.output).toEqual(["::download_cv::"]);
+  });
 });

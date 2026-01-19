@@ -274,11 +274,10 @@ export const Terminal: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("en")}
-                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
-                              onboardingLocale === "en"
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "en"
                                 ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
-                            }`}
+                              }`}
                             aria-pressed={onboardingLocale === "en"}
                             aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
                           >
@@ -287,11 +286,10 @@ export const Terminal: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("it")}
-                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
-                              onboardingLocale === "it"
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "it"
                                 ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
-                            }`}
+                              }`}
                             aria-pressed={onboardingLocale === "it"}
                             aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
                           >
@@ -383,11 +381,10 @@ export const Terminal: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("en")}
-                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
-                              onboardingLocale === "en"
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "en"
                                 ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
-                            }`}
+                              }`}
                             aria-pressed={onboardingLocale === "en"}
                             aria-label={strings.languageOptionAria("en", onboardingLocale === "en")}
                           >
@@ -396,11 +393,10 @@ export const Terminal: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleOnboardingLocaleChange("it")}
-                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${
-                              onboardingLocale === "it"
+                            className={`rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors ${onboardingLocale === "it"
                                 ? "border-terminal-cyan/60 bg-terminal-cyan/90 text-terminal-bg shadow-[0_0_12px_rgba(6,182,212,0.25)]"
                                 : "border-transparent bg-gray-800/80 text-gray-400 hover:border-terminal-cyan/40 hover:text-terminal-cyan"
-                            }`}
+                              }`}
                             aria-pressed={onboardingLocale === "it"}
                             aria-label={strings.languageOptionAria("it", onboardingLocale === "it")}
                           >
@@ -458,17 +454,15 @@ export const Terminal: React.FC = () => {
           </div>
         ) : (
           <div
-            className={` flex w-full min-h-0 flex-col rounded-md border border-gray-700/70 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 ease-out ${
-              isMinimized
+            className={` flex w-full min-h-0 flex-col rounded-md border border-gray-700/70 bg-gray-900/60 backdrop-blur-sm transition-all duration-300 ease-out ${isMinimized
                 ? "flex-none max-h-28 overflow-hidden shadow-[0_8px_18px_rgba(15,23,42,0.35)]"
                 : isCompact
-                ? "flex-none w-full max-w-4xl self-center h-[68vh] min-h-[360px] shadow-[0_18px_45px_rgba(6,182,212,0.28)]"
-                : "flex-1 shadow-[0_12px_35px_rgba(15,23,42,0.45)]"
-            } ${
-              isCompact && !isMinimized
+                  ? "flex-none w-full max-w-4xl self-center h-[68vh] min-h-[360px] shadow-[0_18px_45px_rgba(6,182,212,0.28)]"
+                  : "flex-1 shadow-[0_12px_35px_rgba(15,23,42,0.45)]"
+              } ${isCompact && !isMinimized
                 ? "ring-1 ring-terminal-cyan/40"
                 : ""
-            }`}
+              }`}
           >
             <TerminalHeader
               onClose={handleCloseTerminal}
@@ -495,7 +489,7 @@ export const Terminal: React.FC = () => {
                   ref={terminalRef}
                   className="flex-1 min-h-0 overflow-y-auto px-4 pb-2 pt-4"
                 >
-                  <TerminalOutput lines={lines} />
+                  <TerminalOutput lines={lines} locale={uiLocale} />
                 </div>
                 <TerminalInput
                   currentPath={currentPath}

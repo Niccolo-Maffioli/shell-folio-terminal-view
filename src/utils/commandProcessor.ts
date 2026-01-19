@@ -89,6 +89,10 @@ export class CommandProcessor {
       case "blog":
         return this.handleBlog(args[0]);
 
+      case "cv":
+      case "download-cv":
+        return this.handleCv();
+
       case "ls":
         return this.handleLs(currentPath, args[0]);
 
@@ -329,6 +333,16 @@ export class CommandProcessor {
     return {
       output: [blogCopy.notFound(date)],
       type: "error",
+    };
+  }
+
+  private handleCv(): {
+    output: string[];
+    type: "output" | "error" | "system";
+  } {
+    return {
+      output: ["::download_cv::"],
+      type: "output",
     };
   }
 }
