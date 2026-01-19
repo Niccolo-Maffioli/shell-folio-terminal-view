@@ -10,64 +10,107 @@ const PRIVACY_COPY: Record<LocaleCode, {
     backLabel: string;
     contactIntro: string;
     contactEmail: string;
-    sections: { title: string; body: string }[];
+    sections: { title: string; body: string[] }[];
 }> = {
     en: {
         badge: "Privacy & Policy",
         title: "How this portfolio handles your data",
-        subtitle: "I keep things simple: no accounts, no payments, and only the information you choose to share when you reach out.",
+        subtitle: "This notice explains, in plain terms, how personal data is handled across the portfolio.",
         updatedLabel: "Last updated: January 19, 2026",
         languageLabel: "Language",
         backLabel: "← Back to portfolio",
-        contactIntro: "For any question about this policy you can write to",
+        contactIntro: "For any questions regarding this policy you can reach me at",
         contactEmail: "nico.maffioli@gmail.com",
         sections: [
             {
                 title: "Data Controller",
-                body: "This website is maintained by Niccolò Maffioli. You can reach me at nico.maffioli@gmail.com for any privacy related inquiry.",
+                body: [
+                    "This website is operated by Niccolò Maffioli.",
+                    "For any privacy-related request you can contact me at nico.maffioli@gmail.com.",
+                ],
             },
             {
-                title: "Personal Data Handling",
-                body: "The site does not include login areas, comment forms, or payment modules. If you decide to contact me via email, LinkedIn, or other channels listed in the terminal, I will receive only the information you voluntarily share (for example your name or email) and I will use it solely to respond to your request.",
+                title: "Types of data processed",
+                body: [
+                    "This portfolio does not require accounts, registrations, or payments and it does not automatically collect personal data.",
+                    "Personal data (such as name, email address, or message content) is processed only if you voluntarily contact me via email, LinkedIn, or other channels listed on the website.",
+                ],
             },
             {
-                title: "Cookies",
-                body: "No marketing or tracking cookies are set. The site relies exclusively on essential browser storage described below.",
+                title: "Purpose and legal basis of processing",
+                body: [
+                    "Personal data voluntarily provided is processed solely to respond to contact or information requests and to initiate potential professional communications.",
+                    "Legal basis: performance of pre-contractual measures requested by the data subject (Art. 6(1)(b) GDPR) and the legitimate interest of the data controller in replying to incoming communications (Art. 6(1)(f) GDPR).",
+                ],
+            },
+            {
+                title: "Processing methods",
+                body: [
+                    "Data is processed lawfully, fairly, and transparently, mainly through electronic tools and with appropriate security measures in place.",
+                ],
+            },
+            {
+                title: "Data retention",
+                body: [
+                    "Personal data is retained only for the time strictly necessary to handle and respond to the request, after which it is deleted unless retention is required by law or further communication is agreed upon with the data subject.",
+                ],
+            },
+            {
+                title: "Cookies and similar technologies",
+                body: [
+                    "This website does not use marketing or tracking cookies.",
+                ],
             },
             {
                 title: "Local Storage",
-                body: "A single localStorage key (terminal-onboarding) remembers whether you have already dismissed the onboarding overlay. This value stays in your browser, is not sent to my servers, and can be cleared at any time through your browser settings.",
+                body: [
+                    "A single localStorage key (terminal-onboarding) stores whether the introductory tour has been dismissed:",
+                    "- it remains entirely within the user's browser;",
+                    "- it is not transmitted to external servers;",
+                    "- it can be cleared at any time through the browser settings.",
+                ],
             },
             {
                 title: "Analytics",
-                body: "Traffic analytics are not currently in use. I do not profile visitors or monitor browsing behavior beyond the minimal technical logs produced by the hosting provider for security and performance.",
+                body: [
+                    "No analytics tools are currently in use. Users are not profiled and browsing is not monitored, apart from minimal technical logs generated by the hosting provider for security and maintenance purposes.",
+                ],
             },
             {
-                title: "User Accounts & Access Controls",
-                body: "There are no account systems, invitations, or gated areas. Every piece of content is publicly accessible without registration.",
+                title: "User accounts and payments",
+                body: [
+                    "The website does not include registration or authentication systems, restricted areas, payment checkouts, subscriptions, or donation features; consequently, no payment data is collected or processed.",
+                ],
             },
             {
-                title: "Payments",
-                body: "This portfolio has no checkout, subscription, or donation functionality. No payment data is collected or processed.",
+                title: "Data sharing and transfers",
+                body: [
+                    "Personal data is not shared with third parties.",
+                    "Standard infrastructure providers (hosting, CDN) may process data solely to guarantee the technical operation of the site and are bound by their own confidentiality policies.",
+                    "Personal data is not transferred outside the European Union.",
+                ],
             },
             {
-                title: "Data Sharing",
-                body: "I do not share visitor information with third parties. Standard infrastructure providers (such as the hosting platform or CDN) only process data to deliver the site securely and are bound by their own privacy terms.",
+                title: "Data subject rights",
+                body: [
+                    "Under Regulation (EU) 2016/679 you have the right to access your personal data, request rectification or updates, erasure, restriction of processing, object to processing, and request data portability (where applicable).",
+                    "Requests can be sent to nico.maffioli@gmail.com.",
+                    "You also have the right to lodge a complaint with the Italian Data Protection Authority (Garante per la Protezione dei Dati Personali).",
+                ],
             },
             {
-                title: "Your Rights",
-                body: "You may request clarification, updates, or deletion of any personal data you shared by contacting me via email. I will respond promptly to confirm the action taken.",
-            },
-            {
-                title: "Updates",
-                body: "This notice may evolve if new features (for example analytics or account areas) are introduced. Material changes will be announced on this page together with a new revision date.",
+                title: "Policy updates",
+                body: [
+                    "This policy may be updated if new features are introduced (for example analytics tools or personal areas).",
+                    "Any significant change will be published on this page together with the new revision date.",
+                ],
             },
         ],
     },
     it: {
         badge: "Privacy & Policy",
         title: "Come tratto i tuoi dati",
-        subtitle: "Il portfolio non richiede account né pagamenti e raccoglie solo le informazioni che scegli di inviarmi quando mi contatti.",
+        subtitle: "Questa informativa descrive in modo trasparente come gestisco i dati personali raccolti tramite il portfolio.",
         updatedLabel: "Ultimo aggiornamento: 19 gennaio 2026",
         languageLabel: "Lingua",
         backLabel: "← Torna al portfolio",
@@ -76,43 +119,88 @@ const PRIVACY_COPY: Record<LocaleCode, {
         sections: [
             {
                 title: "Titolare del trattamento",
-                body: "Questo sito è gestito da Niccolò Maffioli. Per richieste relative alla privacy puoi contattarmi all'indirizzo nico.maffioli@gmail.com.",
+                body: [
+                    "Questo sito è gestito da Niccolò Maffioli.",
+                    "Per qualsiasi richiesta relativa alla privacy o al trattamento dei dati personali puoi contattarmi all'indirizzo email: nico.maffioli@gmail.com.",
+                ],
             },
             {
-                title: "Gestione dei dati personali",
-                body: "Il sito non prevede aree di login, form di commento o moduli di pagamento. Se scegli di contattarmi via email, LinkedIn o altri canali presenti nel terminale, riceverò solo le informazioni che decidi di condividere (ad esempio nome o email) e le userò esclusivamente per rispondere alla tua richiesta.",
+                title: "Tipologia di dati trattati",
+                body: [
+                    "Il portfolio non richiede account, registrazioni né pagamenti e non raccoglie automaticamente dati personali.",
+                    "Eventuali dati personali (come nome, indirizzo email o contenuto del messaggio) vengono trattati solo se scegli volontariamente di contattarmi tramite email, LinkedIn o altri canali indicati nel sito.",
+                ],
             },
             {
-                title: "Cookie",
-                body: "Non vengono impostati cookie di marketing o tracciamento. Il sito utilizza esclusivamente gli archivi essenziali del browser descritti di seguito.",
+                title: "Finalità e base giuridica del trattamento",
+                body: [
+                    "I dati personali forniti volontariamente vengono trattati esclusivamente per rispondere a richieste di contatto o informazioni e per avviare eventuali comunicazioni professionali.",
+                    "Base giuridica del trattamento:",
+                    "- esecuzione di misure precontrattuali richieste dall'interessato (art. 6.1.b GDPR);",
+                    "- legittimo interesse del titolare a rispondere alle comunicazioni ricevute (art. 6.1.f GDPR).",
+                ],
+            },
+            {
+                title: "Modalità del trattamento",
+                body: [
+                    "Il trattamento avviene in modo lecito, corretto e trasparente, prevalentemente tramite strumenti elettronici e nel rispetto di misure di sicurezza adeguate.",
+                ],
+            },
+            {
+                title: "Conservazione dei dati",
+                body: [
+                    "I dati personali vengono conservati per il tempo strettamente necessario a gestire e rispondere alla richiesta e successivamente cancellati, salvo obblighi di legge o eventuali comunicazioni ulteriori concordate con l'interessato.",
+                ],
+            },
+            {
+                title: "Cookie e tecnologie simili",
+                body: [
+                    "Il sito non utilizza cookie di profilazione o marketing.",
+                ],
             },
             {
                 title: "Local Storage",
-                body: "Una sola chiave di localStorage (terminal-onboarding) memorizza se hai già chiuso il tour introduttivo. Il valore resta sul tuo browser, non viene inviato ai miei server e puoi eliminarlo in qualunque momento dalle impostazioni del browser.",
+                body: [
+                    "Viene utilizzata una sola chiave di localStorage (terminal-onboarding) per ricordare se il tour introduttivo è già stato visualizzato:",
+                    "- resta esclusivamente nel browser dell'utente;",
+                    "- non viene trasmessa a server esterni;",
+                    "- può essere eliminata in qualunque momento tramite le impostazioni del browser.",
+                ],
             },
             {
                 title: "Analytics",
-                body: "Al momento non utilizzo strumenti di analytics. Non profilo i visitatori e non monitoro la navigazione oltre i log tecnici minimi generati dal provider di hosting per motivi di sicurezza e prestazioni.",
+                body: [
+                    "Al momento non vengono utilizzati strumenti di analytics. Non effettuo profilazione degli utenti né monitoraggio della navigazione oltre agli eventuali log tecnici minimi generati dal provider di hosting per motivi di sicurezza e manutenzione.",
+                ],
             },
             {
-                title: "Account utente e accessi",
-                body: "Non esistono sistemi di registrazione, inviti o aree riservate. Tutti i contenuti sono pubblicamente accessibili senza autenticazione.",
+                title: "Account, aree riservate e pagamenti",
+                body: [
+                    "Il sito non prevede sistemi di registrazione o autenticazione, aree riservate né funzioni di pagamento, checkout, abbonamenti o donazioni; di conseguenza non vengono raccolti dati di pagamento.",
+                ],
             },
             {
-                title: "Pagamenti",
-                body: "Questo portfolio non include funzioni di checkout, abbonamenti o donazioni. Nessun dato di pagamento viene raccolto o trattato.",
+                title: "Comunicazione e trasferimento dei dati",
+                body: [
+                    "I dati personali non vengono condivisi con terze parti.",
+                    "Eventuali fornitori infrastrutturali (hosting, CDN) trattano i dati esclusivamente per garantire il funzionamento tecnico del sito e sono vincolati alle rispettive policy di riservatezza.",
+                    "I dati non vengono trasferiti al di fuori dell'Unione Europea.",
+                ],
             },
             {
-                title: "Condivisione con terze parti",
-                body: "Non condivido informazioni sui visitatori con soggetti terzi. I fornitori infrastrutturali standard (hosting, CDN) trattano i dati solo per erogare il servizio e sono vincolati alle loro policy di riservatezza.",
+                title: "Diritti dell'interessato",
+                body: [
+                    "Ai sensi del Regolamento (UE) 2016/679 hai il diritto di accedere ai tuoi dati personali, richiederne la rettifica o l'aggiornamento, la cancellazione, la limitazione del trattamento, opporti al trattamento e richiedere la portabilità dei dati (ove applicabile).",
+                    "Le richieste possono essere inviate a nico.maffioli@gmail.com.",
+                    "Hai inoltre il diritto di proporre reclamo al Garante per la Protezione dei Dati Personali.",
+                ],
             },
             {
-                title: "I tuoi diritti",
-                body: "Puoi richiedere chiarimenti, aggiornamenti o la cancellazione dei dati personali che mi hai fornito scrivendomi via email. Ti risponderò tempestivamente confermando l'azione eseguita.",
-            },
-            {
-                title: "Aggiornamenti",
-                body: "Questa informativa potrà evolvere se introdurrò nuove funzionalità (ad esempio analytics o aree personali). Ogni modifica sostanziale verrà segnalata in questa pagina insieme alla nuova data di revisione.",
+                title: "Aggiornamenti dell'informativa",
+                body: [
+                    "Questa informativa potrà essere aggiornata in caso di modifiche o introduzione di nuove funzionalità (ad esempio strumenti di analytics o aree personali).",
+                    "Ogni aggiornamento rilevante verrà pubblicato in questa pagina con l'indicazione della nuova data di revisione.",
+                ],
             },
         ],
     },
@@ -178,7 +266,9 @@ const PrivacyPolicy = () => {
                 {copy.sections.map((section) => (
                     <section key={section.title} className="space-y-2">
                         <h2 className="text-lg font-semibold text-terminal-cyan">{section.title}</h2>
-                        <p>{section.body}</p>
+                        {section.body.map((paragraph, paragraphIndex) => (
+                            <p key={`${section.title}-${paragraphIndex}`}>{paragraph}</p>
+                        ))}
                     </section>
                 ))}
 
