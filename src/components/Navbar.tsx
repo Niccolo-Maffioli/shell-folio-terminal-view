@@ -19,6 +19,7 @@ const buildNavLinks = (currentLanguage: LocaleCode): NavLink[] => {
         { label: navbarStrings.skills, command: "skills", id: "Skills" },
         { label: navbarStrings.projects, command: "projects", id: "Projects" },
         { label: navbarStrings.experience, command: "experience", id: "Experience" },
+        { label: navbarStrings.education, command: "education", id: "Education" },
         { label: navbarStrings.contact, command: "contact", id: "Contact" },
         { label: navbarStrings.cv, command: "cv", id: "CV" },
         { label: navbarStrings.help, command: "help", id: "Help" },
